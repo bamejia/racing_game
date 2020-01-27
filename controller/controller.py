@@ -22,7 +22,7 @@ class Controller:
             enemy_input(self.model.vehicles)
 
             self.model.update()
-            self.view.display_race(self.model.vehicles)
+            self.view.update(self.model.vehicles)
 
             # if player.health <= 0:
             #     break

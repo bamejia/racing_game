@@ -5,8 +5,8 @@ from model.direction import Dir
 
 
 class Vehicle:
-    __input_x_vel = 0
-    __input_y_vel = 0
+    # __input_x_vel = 0
+    # __input_y_vel = 0
 
     def __init__(self, index, movement_pattern, x, y, w, l, acceleration, max_speed, handling, max_handling,
                  health, input_x_vel=0, input_y_vel=0, input_direction=Dir.NONE, reaction_x_vel=0, reaction_y_vel=0,
@@ -40,7 +40,7 @@ class Vehicle:
     def move(self, other_vehicles):
         vehicle_movement_handler(self, other_vehicles)
 
-    # getters
+    """ getters """
     @property
     def index(self):
         return self.__index
@@ -101,7 +101,7 @@ class Vehicle:
     def friction_marker(self):
         return self.__friction_marker
 
-    # setters
+    """ setters """
     @index.setter
     def index(self, index):
         self.__index = index
@@ -185,6 +185,28 @@ class Player(Vehicle):
                  max_handling=gv.PLAYER_MAX_HANDLING, health=gv.PLAYER_STARTING_HEALTH):
         super().__init__(index, movement_pattern, x, y, w, l, acceleration, max_speed, handling, max_handling, health)
 
+        self.score = 0
+
+    def is_below_screen(self):
+        if despawn_enemies.check_if_below_screen(self):
+            return True
+        return False
+
+    @property
+    def score(self):
+        return self.__score
+
+    def health(self):
+        return self.__health
+
+    @score.setter
+    def score(self, score):
+        self.__score = score
+
+    @health.setter
+    def health(self, health):
+        self.__health = health
+
 
 class Enemy(Vehicle):
     def __init__(self, index, movement_pattern="random", x=None, y=None, w=gv.ENEMY_WIDTH, l=gv.ENEMY_LENGTH,
@@ -202,6 +224,6 @@ class Enemy(Vehicle):
                              health, input_x_vel, input_y_vel, input_direction)
 
     def check_to_despawn(self, vehicles):
-        if despawn_enemies.check_to_despawn(self):
+        if despawn_enemies.check_if_below_screen(self):
             despawn_enemies.despawn(self, vehicles)
 

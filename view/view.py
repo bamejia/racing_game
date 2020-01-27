@@ -26,35 +26,35 @@ class View:
         # for p, item in enumerate(potato):
         #     w, l = potato[p].get_size()
         #     potato[p] = pygame.transform.scale(potato[p], (int(round(w/2)), int(round(l/2))))
-        player_car = pygame.image.load("images/car/red car.png")
+        player_car = pygame.image.load("Images/car/red car.png")
         player_car = pygame.transform.rotate(player_car, 90)
         player_car = pygame.transform.scale(player_car, (gv.PLAYER_WIDTH, gv.PLAYER_LENGTH))  # (30, 60)
 
-        random_enemy_car = pygame.image.load("images/car/purple car.png")
+        random_enemy_car = pygame.image.load("Images/car/purple car.png")
         random_enemy_car = pygame.transform.rotate(random_enemy_car, 90)
         random_enemy_car = pygame.transform.scale(random_enemy_car, (gv.ENEMY_WIDTH, gv.ENEMY_LENGTH))
 
-        side_to_side_enemy_car = pygame.image.load("images/car/orange car.png")
+        side_to_side_enemy_car = pygame.image.load("Images/car/orange car.png")
         side_to_side_enemy_car = pygame.transform.rotate(side_to_side_enemy_car, 90)
         side_to_side_enemy_car = pygame.transform.scale(side_to_side_enemy_car, (gv.ENEMY_WIDTH, gv.ENEMY_LENGTH))
 
-        up_and_down_enemy_car = pygame.image.load("images/car/yellow car.png")
+        up_and_down_enemy_car = pygame.image.load("Images/car/yellow car.png")
         up_and_down_enemy_car = pygame.transform.rotate(up_and_down_enemy_car, 90)
         up_and_down_enemy_car = pygame.transform.scale(up_and_down_enemy_car, (gv.ENEMY_WIDTH, gv.ENEMY_LENGTH))
 
-        diagonal_enemy_car = pygame.image.load("images/car/pink car.png")
+        diagonal_enemy_car = pygame.image.load("Images/car/pink car.png")
         diagonal_enemy_car = pygame.transform.rotate(diagonal_enemy_car, 90)
         diagonal_enemy_car = pygame.transform.scale(diagonal_enemy_car, (gv.ENEMY_WIDTH, gv.ENEMY_LENGTH))
 
-        tracker_enemy_car = pygame.image.load("images/car/black car.png")
+        tracker_enemy_car = pygame.image.load("Images/car/black car.png")
         tracker_enemy_car = pygame.transform.rotate(tracker_enemy_car, 90)
         tracker_enemy_car = pygame.transform.scale(tracker_enemy_car, (gv.ENEMY_WIDTH, gv.ENEMY_LENGTH))
 
-        static_enemy_car = pygame.image.load("images/car/green car.png")
+        static_enemy_car = pygame.image.load("Images/car/green car.png")
         static_enemy_car = pygame.transform.rotate(static_enemy_car, 90)
         static_enemy_car = pygame.transform.scale(static_enemy_car, (gv.ENEMY_WIDTH, gv.ENEMY_LENGTH))
 
-        speed_demon_car = pygame.image.load("images/car/white car.png")
+        speed_demon_car = pygame.image.load("Images/car/white car.png")
         speed_demon_car = pygame.transform.rotate(speed_demon_car, 90)
         speed_demon_car = pygame.transform.scale(speed_demon_car, (gv.ENEMY_WIDTH, gv.ENEMY_LENGTH))
 
@@ -72,7 +72,7 @@ class View:
         self.clock = pygame.time.Clock()
 
     # methods
-    def display_race(self, vehicles):
+    def update(self, vehicles):
         display_race(self, vehicles)
 
     # getters

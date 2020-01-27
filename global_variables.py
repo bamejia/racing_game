@@ -71,3 +71,10 @@ MOVEMENT_PATTERNS = (
     "speed demon"
 )
 
+# power up types
+POWER_UPS = (
+    "force bubble",
+    "one shot",
+    "speed"
+)
+
