@@ -5,6 +5,9 @@ from view.view import View
 import pygame
 import global_variables as gv
 
+""" temporary """
+import time
+
 
 class Controller:
     def __init__(self):
@@ -26,10 +29,9 @@ class Controller:
             self.view.update(self.model.vehicles)
 
             if not self.model.check_if_player_is_alive():
+                time.sleep(2) # temp
                 pygame.quit()
                 quit()
-            # if player.health <= 0:
-            #     break
 
             # print(self.view.clock.get_fps())
 
