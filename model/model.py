@@ -9,20 +9,25 @@ class Model:
         self.vehicles = [Player(0)]
         self.player = self.vehicles[0]
 
-    # methods
+    """ methods """
     def update(self):
         spawn_chance(self.vehicles)
 
-        # updates location of all vehicles
+        """ updates location of all vehicles """
         for i, item in enumerate(self.vehicles):
             self.vehicles[i].move(self.vehicles)
 
-        # checks for which vehicle to despawn next
+        """ checks for which vehicle to despawn next """
         for i, item in enumerate(self.vehicles):
             if isinstance(self.vehicles[i], Enemy):
                 self.vehicles[i].check_to_despawn(self.vehicles)
 
-    # getters
+        self.player.score += 1
+
+    def check_if_player_is_alive(self):
+        return self.player.is_alive()
+
+    """ getters """
     @property
     def vehicles(self):
         return self.__vehicles
@@ -31,7 +36,7 @@ class Model:
     def player(self):
         return self.__player
 
-    # setters
+    """ setters """
     @vehicles.setter
     def vehicles(self, vehicles):
         self.__vehicles = vehicles

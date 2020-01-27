@@ -1,6 +1,8 @@
 import os
 import global_variables as gv
 from view.display_race import display_race
+from view.display_health import display_health
+from view.display_score import display_score
 import pygame
 # from OpenGL.GL import *
 # from OpenGL.GLU import *
@@ -74,6 +76,11 @@ class View:
     # methods
     def update(self, vehicles):
         display_race(self, vehicles)
+        display_health(self.surface, vehicles[0])
+        display_score(self, vehicles[0])
+
+        self.display.update()
+        # print(self.clock.get_fps())
 
     # getters
     @property

@@ -21,7 +21,7 @@ ROAD_X_PLACEMENT = (int(round(WINDOW_W * (1 - ROAD_W_RATIO) / 2)))
 
 # colors
 WHITE = (255, 255, 255)
-VERY_LIGHT_GREAT = (200, 200, 200)
+VERY_LIGHT_GREY = (200, 200, 200)
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 150)
 GREEN = (0, 125, 0)

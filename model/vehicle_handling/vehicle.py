@@ -40,6 +40,11 @@ class Vehicle:
     def move(self, other_vehicles):
         vehicle_movement_handler(self, other_vehicles)
 
+    def is_alive(self):
+        if self.health > 0:
+            return True
+        return False
+
     """ getters """
     @property
     def index(self):
@@ -125,6 +130,8 @@ class Vehicle:
     @health.setter
     def health(self, health):
         self.__health = health
+        if self.__health < 0:
+            self.__health = 0
 
     @cur_direction.setter
     def cur_direction(self, cur_direction):
@@ -192,20 +199,15 @@ class Player(Vehicle):
             return True
         return False
 
+    """ getters """
     @property
     def score(self):
         return self.__score
 
-    def health(self):
-        return self.__health
-
+    """ setters """
     @score.setter
     def score(self, score):
         self.__score = score
-
-    @health.setter
-    def health(self, health):
-        self.__health = health
 
 
 class Enemy(Vehicle):
@@ -223,6 +225,7 @@ class Enemy(Vehicle):
             super().__init__(index, movement_pattern, 30, 30, w, l, acceleration, max_speed, handling, max_handling,
                              health, input_x_vel, input_y_vel, input_direction)
 
+    """ methods """
     def check_to_despawn(self, vehicles):
         if despawn_enemies.check_if_below_screen(self):
             despawn_enemies.despawn(self, vehicles)
