@@ -6,16 +6,13 @@ import global_variables as gv
 
 def player_input(player):
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
+
         keys = pygame.key.get_pressed()
         num_of_keys = keys.count(True)
 
-        if keys[pygame.K_ESCAPE]:
+        if event.type == pygame.QUIT or keys[pygame.K_ESCAPE]:
             pygame.quit()
             quit()
-
         if keys[pygame.K_UP] and num_of_keys == 1:
             player.input_direction = Dir.NORTH
         elif keys[pygame.K_UP] and keys[pygame.K_RIGHT] and num_of_keys == 2:

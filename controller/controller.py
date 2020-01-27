@@ -2,6 +2,7 @@ from controller.player_input import player_input
 from controller.enemy_input import enemy_input
 from model.model import Model
 from view.view import View
+import pygame
 import global_variables as gv
 
 
@@ -24,6 +25,9 @@ class Controller:
             self.model.update()
             self.view.update(self.model.vehicles)
 
+            if not self.model.check_if_player_is_alive():
+                pygame.quit()
+                quit()
             # if player.health <= 0:
             #     break
 
