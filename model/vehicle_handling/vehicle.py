@@ -5,9 +5,6 @@ from model.direction import Dir
 
 
 class Vehicle:
-    # __input_x_vel = 0
-    # __input_y_vel = 0
-
     def __init__(self, index, movement_pattern, x, y, w, l, acceleration, max_speed, handling, max_handling,
                  health, input_x_vel=0, input_y_vel=0, input_direction=Dir.NONE, reaction_x_vel=0, reaction_y_vel=0,
                  reaction_direction=Dir.NONE, cur_x_vel=0, cur_y_vel=0, cur_direction=Dir.NONE,
@@ -44,6 +41,20 @@ class Vehicle:
         if self.health > 0:
             return True
         return False
+
+    def is_next_to_road(self):
+        if abs(self.cur_x_vel) >= self.max_handling:
+            if self.x + self.cur_x_vel < gv.ROAD_X_PLACEMENT:
+                return Dir.WEST
+            elif self.x + self.w + self.cur_x_vel > gv.ROAD_X_PLACEMENT + gv.ROAD_W:
+                return Dir.EAST
+        else:
+            if self.x + self.cur_x_vel - self.handling < gv.ROAD_X_PLACEMENT:
+                return Dir.WEST
+            elif self.x + self.w + self.cur_x_vel + self.handling > gv.ROAD_X_PLACEMENT + gv.ROAD_W:
+                return Dir.EAST
+        return Dir.NONE
+
 
     """ getters """
     @property

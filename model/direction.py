@@ -19,3 +19,22 @@ class Dir(Enum):
         for direct in Dir:
             if direct.value == opposite:
                 return direct
+
+    @staticmethod
+    def inverse(input_dir):
+        if input_dir == Dir.NONE or input_dir == Dir.NORTH or input_dir == Dir.SOUTH:
+            return input_dir
+        if input_dir == Dir.NORTHWEST:
+            return Dir.NORTHEAST
+        if input_dir == Dir.NORTHEAST:
+            return Dir.NORTHWEST
+        if input_dir == Dir.SOUTHWEST:
+            return Dir.SOUTHEAST
+        if input_dir == Dir.SOUTHEAST:
+            return Dir.SOUTHWEST
+        if input_dir == Dir.EAST:
+            return Dir.WEST
+        if input_dir == Dir.WEST:
+            return Dir.EAST
+
+

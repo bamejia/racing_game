@@ -1,6 +1,7 @@
 import random
 from model.vehicle_handling.vehicle import Enemy
 from model.direction import Dir
+from model.vehicle_handling.collision_and_boundaries import check_on_road
 
 
 def enemy_input(vehicles):
@@ -10,23 +11,33 @@ def enemy_input(vehicles):
 
 
 def choose_pattern(enemy, vehicles):
-    if random.randint(0, 80) != 0:
-        return
 
-    if enemy.movement_pattern == "random":
-        random_pattern(enemy)
-    elif enemy.movement_pattern == "side to side":
-        side_to_side_pattern(enemy)
-    elif enemy.movement_pattern == "up and down":
-        up_and_down_pattern(enemy)
-    elif enemy.movement_pattern == "diagonal":
-        diagonal_pattern(enemy)
-    elif enemy.movement_pattern == "tracker":
-        tracker_pattern(enemy, vehicles)
-    elif enemy.movement_pattern == "static":
-        static_pattern(enemy)
-    elif enemy.movement_pattern == "speed demon":
-        speed_demon_pattern(enemy)
+    if random.randint(0, 80) == 0:
+
+        """ depending on the movement_pattern of the car, will choose respective method """
+        if enemy.movement_pattern == "random":
+            random_pattern(enemy)
+        elif enemy.movement_pattern == "side to side":
+            side_to_side_pattern(enemy)
+        elif enemy.movement_pattern == "up and down":
+            up_and_down_pattern(enemy)
+        elif enemy.movement_pattern == "diagonal":
+            diagonal_pattern(enemy)
+        elif enemy.movement_pattern == "tracker":
+            tracker_pattern(enemy, vehicles)
+        elif enemy.movement_pattern == "static":
+            static_pattern(enemy)
+        elif enemy.movement_pattern == "speed demon":
+            speed_demon_pattern(enemy)
+
+    """ keeps cars on the road """
+    road_direction = enemy.is_next_to_road()
+    if road_direction.value > 0:
+        if enemy.input_direction.value > 0 and enemy.input_direction != Dir.NORTH:
+            enemy.input_direction = Dir.inverse(road_direction)
+    elif road_direction.value < 0:
+        if enemy.input_direction.value < 0 and enemy.input_direction != Dir.SOUTH:
+            enemy.input_direction = Dir.inverse(road_direction)
 
 
 def random_pattern(enemy):
