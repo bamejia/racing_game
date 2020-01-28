@@ -1,6 +1,6 @@
 from model.vehicle_handling.vehicle_movement_handler import vehicle_movement_handler
 import global_variables as gv
-from model.vehicle_handling import despawn_enemies
+from model.vehicle_handling import off_screen_handling
 from model.direction import Dir
 
 
@@ -195,7 +195,7 @@ class Player(Vehicle):
         self.score = 0
 
     def is_below_screen(self):
-        if despawn_enemies.check_if_below_screen(self):
+        if off_screen_handling.check_if_below_screen(self):
             return True
         return False
 
@@ -227,6 +227,6 @@ class Enemy(Vehicle):
 
     """ methods """
     def check_to_despawn(self, vehicles):
-        if despawn_enemies.check_if_below_screen(self):
-            despawn_enemies.despawn(self, vehicles)
+        if off_screen_handling.check_if_below_screen(self):
+            off_screen_handling.despawn(self, vehicles)
 

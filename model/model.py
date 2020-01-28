@@ -22,6 +22,9 @@ class Model:
             if isinstance(self.vehicles[i], Enemy):
                 self.vehicles[i].check_to_despawn(self.vehicles)
 
+        if self.player.is_below_screen():
+            self.player.health -= 10
+
         self.player.score += 1
 
     def check_if_player_is_alive(self):

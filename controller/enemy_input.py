@@ -122,7 +122,7 @@ def static_pattern(enemy):
 
 
 def speed_demon_pattern(enemy):
-    chosen_move = random.randint(1, 3)
+    chosen_move = random.randint(0, 3)
 
     if chosen_move == 1:
         enemy.input_direction = Dir.NORTHWEST
@@ -130,7 +130,5 @@ def speed_demon_pattern(enemy):
         enemy.input_direction = Dir.NORTHEAST
     elif chosen_move == 3:
         enemy.input_direction = Dir.NORTH
-    # elif chosen_move == 4:
-    #     enemy.input_direction = Dir.SOUTHEAST
-    # else:
-    #     enemy.input_direction = Dir.NONE
+    else:
+        enemy.input_direction = Dir.NONE

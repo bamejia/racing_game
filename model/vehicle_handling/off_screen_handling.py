@@ -1,6 +1,6 @@
 from global_variables import WINDOW_L
 
-off_screen_distance = 300
+off_screen_distance = 150
 
 
 def check_if_below_screen(vehicle):
@@ -10,6 +10,7 @@ def check_if_below_screen(vehicle):
 
 
 def despawn(vehicle, vehicles):
+    """ removes input vehicle from input list of vehicles, essentially, despawning them """
     index = vehicles.index(vehicle)
     del vehicles[index]
     while index < len(vehicles):
