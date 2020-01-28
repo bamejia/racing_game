@@ -8,6 +8,7 @@ import sys
 buildOptions = dict(
     packages=["pygame", "win32api", "sys"],
     include_files=["controller", "model", "view", "global_variables.py", "Images"],
+    build_exe=".\\build\\v0.2",
     excludes=[]
 )
 
@@ -18,7 +19,7 @@ executables = [
 ]
 
 setup(name='racing game',
-      version='0.1',
+      version='0.2',
       description='racing game',
       options=dict(build_exe=buildOptions),
       executables=executables)
