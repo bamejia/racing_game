@@ -1,4 +1,4 @@
-# racing_game
+# racing game
 
 
 - 'arrows keys' to move<br />
