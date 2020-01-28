@@ -1,5 +1,4 @@
 # racing_game
-racing game
 
 -'arrows keys' to move
 -'enter key' to pause
