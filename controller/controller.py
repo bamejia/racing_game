@@ -1,4 +1,5 @@
 from controller.player_input import player_input
+from controller.player2_input import player_input2
 from controller.enemy_input import enemy_input
 from model.model import Model
 from view.view import View
@@ -23,16 +24,18 @@ class Controller:
         has_not_quit_game = True
         while has_not_quit_game:
 
-            has_not_quit_game = player_input(self.model.player)
+            has_not_quit_game = player_input(self.model.vehicles[0])
+            player_input2(self.model.vehicles[1])
+
             enemy_input(self.model.vehicles)
 
             self.model.update()
             self.view.update(self.model.vehicles)
 
-            if not self.model.check_if_player_is_alive():
-                time.sleep(2) # temp
-                pygame.quit()
-                sys.exit()
+            # if not self.model.check_if_player_is_alive():
+            #     time.sleep(2) # temp
+            #     pygame.quit()
+            #     sys.exit()
 
             # print(self.view.clock.get_fps())
 

@@ -4,9 +4,9 @@ import global_variables as gv
 
 # final variables
 acceleration_marker = 0
-acceleration_MOD = 5
+acceleration_MOD = 6
 handling_marker = 0
-handling_MOD = 4
+handling_MOD = 5
 
 
 def vehicle_movement_handler(vehicle, other_vehicles):
@@ -15,8 +15,10 @@ def vehicle_movement_handler(vehicle, other_vehicles):
     input_handler(vehicle)
 
     # Current Movement
-    vehicle.cur_x_vel = vehicle.input_x_vel + vehicle.reaction_x_vel
-    vehicle.cur_y_vel = vehicle.input_y_vel + vehicle.reaction_y_vel + gv.TRAFFIC_SPEED
+    # vehicle.x_input_against_x_reaction()
+    # vehicle.y_input_against_y_reaction()
+    vehicle.cur_x_vel = vehicle.input_x_vel # + vehicle.reaction_x_vel
+    vehicle.cur_y_vel = vehicle.input_y_vel + gv.TRAFFIC_SPEED #+ vehicle.reaction_y_vel
 
     # Update Position
     vehicle.x += vehicle.cur_x_vel
@@ -33,62 +35,69 @@ def input_handler(vehicle):
     if vehicle.input_direction == Dir.NORTH:
         vehicle.acceleration_count = (vehicle.acceleration_count - 1) % acceleration_MOD
         if vehicle.acceleration_count == acceleration_marker:
-            vehicle.input_y_vel -= vehicle.acceleration
+            vehicle.acceleration_on_input_y_vel(-vehicle.acceleration)
     elif vehicle.input_direction == Dir.NORTHEAST:
         vehicle.acceleration_count = (vehicle.acceleration_count - 1) % acceleration_MOD
         vehicle.handling_count = (vehicle.handling_count + 1) % handling_MOD
         if vehicle.handling_count == handling_marker:
-            vehicle.input_x_vel += vehicle.handling
+            vehicle.acceleration_on_input_x_vel(vehicle.handling)
         if vehicle.acceleration_count == acceleration_marker:
-            vehicle.input_y_vel -= vehicle.acceleration
+            vehicle.acceleration_on_input_y_vel(-vehicle.acceleration)
     elif vehicle.input_direction == Dir.EAST:
         vehicle.handling_count = (vehicle.handling_count + 1) % handling_MOD
         if vehicle.handling_count == handling_marker:
-            vehicle.input_x_vel += vehicle.handling
+            vehicle.acceleration_on_input_x_vel(vehicle.handling)
     elif vehicle.input_direction == Dir.SOUTHEAST:
         vehicle.acceleration_count = (vehicle.acceleration_count + 1) % acceleration_MOD
         vehicle.handling_count = (vehicle.handling_count + 1) % handling_MOD
         if vehicle.handling_count == handling_marker:
-            vehicle.input_x_vel += vehicle.handling
+            vehicle.acceleration_on_input_x_vel(vehicle.handling)
         if vehicle.acceleration_count == acceleration_marker:
-            vehicle.input_y_vel += vehicle.acceleration
+            vehicle.acceleration_on_input_y_vel(vehicle.acceleration)
     elif vehicle.input_direction == Dir.SOUTH:
         vehicle.acceleration_count = (vehicle.acceleration_count + 1) % acceleration_MOD
         if vehicle.acceleration_count == acceleration_marker:
-            vehicle.input_y_vel += vehicle.acceleration
+            vehicle.acceleration_on_input_y_vel(vehicle.acceleration)
     elif vehicle.input_direction == Dir.SOUTHWEST:
         vehicle.acceleration_count = (vehicle.acceleration_count + 1) % acceleration_MOD
         vehicle.handling_count = (vehicle.handling_count - 1) % handling_MOD
         if vehicle.handling_count == handling_marker:
-            vehicle.input_x_vel -= vehicle.handling
+            vehicle.acceleration_on_input_x_vel(-vehicle.handling)
         if vehicle.acceleration_count == acceleration_marker:
-            vehicle.input_y_vel += vehicle.acceleration
+            vehicle.acceleration_on_input_y_vel(vehicle.acceleration)
     elif vehicle.input_direction == Dir.WEST:
         vehicle.handling_count = (vehicle.handling_count - 1) % handling_MOD
         if vehicle.handling_count == handling_marker:
-            vehicle.input_x_vel -= vehicle.handling
+            vehicle.acceleration_on_input_x_vel(-vehicle.handling)
     elif vehicle.input_direction == Dir.NORTHWEST:
         vehicle.acceleration_count = (vehicle.acceleration_count - 1) % acceleration_MOD
         vehicle.handling_count = (vehicle.handling_count - 1) % handling_MOD
         if vehicle.handling_count == handling_marker:
-            vehicle.input_x_vel -= vehicle.handling
+            vehicle.acceleration_on_input_x_vel(-vehicle.handling)
         if vehicle.acceleration_count == acceleration_marker:
-            vehicle.input_y_vel -= vehicle.acceleration
+            vehicle.acceleration_on_input_y_vel(-vehicle.acceleration)
 
 
 def collision_and_boundary_handler(vehicle, other_vehicles):
     collided_vehicle = cb.check_all_collision(vehicle, other_vehicles)
     if collided_vehicle is not None:
-        collided_vehicle.reaction_x_vel = int(round(vehicle.cur_x_vel * 4 / 5))
-        collided_vehicle.reaction_y_vel = int(round(vehicle.cur_y_vel * 4 / 5))
+        collided_vehicle.reaction_x_vel = int(round(vehicle.input_x_vel * 7 / 13))
+        collided_vehicle.reaction_on_input_x_vel()
+        collided_vehicle.reaction_y_vel = int(round(vehicle.input_y_vel * 7 / 13))
+        collided_vehicle.reaction_on_input_y_vel()
         vehicle.x -= vehicle.cur_x_vel
         vehicle.y -= vehicle.cur_y_vel
         # vehicle.input_x_vel = 0
         # vehicle.input_y_vel = 0
-        vehicle.reaction_x_vel = int(round(-vehicle.input_x_vel * 7 / 5))
-        vehicle.reaction_y_vel = int(round(-vehicle.input_y_vel * 7 / 5))
+        vehicle.reaction_x_vel = int(round(collided_vehicle.cur_x_vel * 6 / 13))
+        vehicle.reaction_on_input_x_vel()
+        vehicle.reaction_y_vel = int(round(collided_vehicle.cur_y_vel * 6 / 13))
+        vehicle.reaction_on_input_y_vel()
         vehicle.health -= 5
         collided_vehicle.health -= 5
+
+    # vehicle.x_input_against_x_reaction()
+    # vehicle.y_input_against_y_reaction()
 
     # Check vehicle to remain within boundaries
     cb.check_boundary(vehicle)
@@ -106,24 +115,24 @@ def friction_handler(vehicle):
 
     if vehicle.input_x_vel > 0:
         if vehicle.input_x_vel - gv.FRICTION < 0:
-            vehicle.input_x_vel = 0
+            vehicle.friction_on_input_x_vel(0)
         else:
-            vehicle.input_x_vel -= gv.FRICTION
+            vehicle.friction_on_input_x_vel(vehicle.input_x_vel - gv.FRICTION)
     elif vehicle.input_x_vel < 0:
         if vehicle.input_x_vel + gv.FRICTION > 0:
-            vehicle.input_x_vel = 0
+            vehicle.friction_on_input_x_vel(0)
         else:
-            vehicle.input_x_vel += gv.FRICTION
+            vehicle.friction_on_input_x_vel(vehicle.input_x_vel + gv.FRICTION)
     if vehicle.input_y_vel > 0:
         if vehicle.input_y_vel - gv.FRICTION < 0:
-            vehicle.input_y_vel = 0
+            vehicle.friction_on_input_y_vel(0)
         else:
-            vehicle.input_y_vel -= gv.FRICTION
+            vehicle.friction_on_input_y_vel(vehicle.input_y_vel - gv.FRICTION)
     elif vehicle.input_y_vel < 0:
         if vehicle.input_y_vel + gv.FRICTION > 0:
-            vehicle.input_y_vel = 0
+            vehicle.friction_on_input_y_vel(0)
         else:
-            vehicle.input_y_vel += gv.FRICTION
+            vehicle.friction_on_input_y_vel(vehicle.input_y_vel + gv.FRICTION)
 
     # FRICTION on Reaction
     if vehicle.reaction_x_vel > 0:

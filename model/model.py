@@ -6,16 +6,16 @@ class Model:
     # player = Player(400, 400, 20, 20, 1, 8, 1, 8)
     # vehicles.append(Enemy(1, "enemy car", 400, 500))
     def __init__(self):
-        self.vehicles = [Player(0)]
+        self.vehicles = [Player(0), Player(1, x=600)]
         self.player = self.vehicles[0]
 
     """ methods """
     def update(self):
-        spawn_chance(self.vehicles)
+        # spawn_chance(self.vehicles)
 
         """ updates location of all vehicles """
         for i, item in enumerate(self.vehicles):
-            self.vehicles[i].move(self.vehicles)
+            self.vehicles[i].update_location(self.vehicles)
 
         """ checks for which vehicle to despawn next """
         for i, item in enumerate(self.vehicles):
