@@ -24,8 +24,10 @@ class Controller:
         has_not_quit_game = True
         while has_not_quit_game:
 
-            has_not_quit_game = player_input(self.model.vehicles[0])
-            player_input2(self.model.vehicles[1])
+            events = pygame.event.get()
+
+            has_not_quit_game = player_input(self.model.vehicles[0], events)
+            player_input2(self.model.vehicles[1], events)
 
             enemy_input(self.model.vehicles)
 

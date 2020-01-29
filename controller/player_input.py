@@ -5,9 +5,8 @@ import global_variables as gv
 import sys
 
 
-def player_input(player):
-    for event in pygame.event.get():
-
+def player_input(player, events):
+    for event in events:
         keys = pygame.key.get_pressed()
         # num_of_keys = keys.count(True)
 

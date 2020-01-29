@@ -5,8 +5,9 @@ import global_variables as gv
 import sys
 
 
-def player_input2(player):
-    for event in pygame.event.get():
+def player_input2(player, events):
+    pygame.key.set_repeat()
+    for event in events:
 
         keys = pygame.key.get_pressed()
         # num_of_keys = keys.count(True)
@@ -36,5 +37,5 @@ def player_input2(player):
         if keys[pygame.K_BACKSPACE]:
             gv.PAUSE = True
             pause()
-
+    pygame.key.set_repeat(1, 1)
     return True
