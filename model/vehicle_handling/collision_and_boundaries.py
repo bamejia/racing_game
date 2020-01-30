@@ -40,8 +40,8 @@ def check_boundary(vehicle):
         vehicle.x = WINDOW_W - vehicle.w
     if vehicle.y < -vehicle.l - 1:
         vehicle.y = -vehicle.l - 1
-    elif vehicle.y + vehicle.l > WINDOW_L:
-        vehicle.y = WINDOW_L - vehicle.l
+    # elif vehicle.y + vehicle.l > WINDOW_L:
+    #     vehicle.y = WINDOW_L - vehicle.l
 
 
 def check_on_road(vehicle):

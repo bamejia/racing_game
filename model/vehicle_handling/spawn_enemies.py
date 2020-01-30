@@ -25,7 +25,7 @@ def spawn_chance(vehicles, movement_pattern="random", x=None, y=None, w=gv.ENEMY
 
 
 def spawn_random_enemy(index, movement_pattern, x, y, w, l):
-    pattern = gv.MOVEMENT_PATTERNS[random.randint(1, len(gv.MOVEMENT_PATTERNS)-1)]
+    pattern = gv.MOVEMENT_PATTERNS[random.randint(2, len(gv.MOVEMENT_PATTERNS)-1)]
     return Enemy(index, pattern, x, y, w, l)
 
 
