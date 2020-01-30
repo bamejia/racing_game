@@ -1,4 +1,4 @@
-from global_variables import WINDOW_W, WINDOW_L, ROAD_X_PLACEMENT, ROAD_W
+from global_variables import WINDOW_W, WINDOW_L, ROAD_X_PLACEMENT, ROAD_W, BOTTOM_BORDER
 
 
 def check_collision(vehicle, other_vehicle):
@@ -40,8 +40,9 @@ def check_boundary(vehicle):
         vehicle.x = WINDOW_W - vehicle.w
     if vehicle.y < -vehicle.l - 1:
         vehicle.y = -vehicle.l - 1
-    # elif vehicle.y + vehicle.l > WINDOW_L:
-    #     vehicle.y = WINDOW_L - vehicle.l
+    if BOTTOM_BORDER:
+        if vehicle.y + vehicle.l > WINDOW_L:
+            vehicle.y = WINDOW_L - vehicle.l
 
 
 def check_on_road(vehicle):

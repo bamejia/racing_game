@@ -11,7 +11,7 @@ class Model:
 
     """ methods """
     def update(self):
-        spawn_chance(self.vehicles)
+        # spawn_chance(self.vehicles)
 
         """ updates location of all vehicles """
         for i, item in enumerate(self.vehicles):

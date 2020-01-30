@@ -312,9 +312,11 @@ class Vehicle:
 
     """ if input_x_vel and reaction_x_vel are in the same direction, returns False, else True"""
     def reaction_on_input_x_vel(self):
-        if (self.__input_x_vel < 0 and self.__reaction_x_vel < 0) or (self.__input_x_vel >= 0 and self.__reaction_x_vel >= 0):
-            self.__input_x_vel = int(round(self.__reaction_x_vel * 13 / 13))  #int(round((self.__input_x_vel + self.__reaction_x_vel) / 2))
+        if (self.__input_x_vel < 0 and self.__reaction_x_vel < 0) or (self.__input_x_vel > 0 and self.__reaction_x_vel > 0):
+            self.__input_x_vel = int(round((self.__reaction_x_vel + self.__input_x_vel) / 2))  #int(round((self.__input_x_vel + self.__reaction_x_vel) / 2))
             return False
+        elif self.__input_x_vel == 0 and self.__reaction_x_vel == 0:
+            return
         else:
             self.__input_x_vel = self.__input_x_vel + self.__reaction_x_vel
             return True
@@ -340,9 +342,11 @@ class Vehicle:
 
     """ if input_y_vel and reaction_y_vel are in the same direction, returns False, else True"""
     def reaction_on_input_y_vel(self):
-        if (self.__input_y_vel < 0 and self.__reaction_y_vel < 0) or (self.__input_y_vel >= 0 and self.__reaction_y_vel >= 0):
-            self.__input_y_vel = int(round(self.__reaction_y_vel * 13 / 13))   #int(round((self.input_y_vel + self.__reaction_y_vel) / 2))
+        if (self.__input_y_vel < 0 and self.__reaction_y_vel < 0) or (self.__input_y_vel > 0 and self.__reaction_y_vel > 0):
+            self.__input_y_vel = int(round((self.__reaction_y_vel + self.__input_y_vel) / 2))   #int(round((self.input_y_vel + self.__reaction_y_vel) / 2))
             return False
+        elif self.__input_y_vel == 0 and self.__reaction_y_vel == 0:
+            return
         else:
             self.__input_y_vel = self.__input_y_vel + self.__reaction_y_vel
             return True
