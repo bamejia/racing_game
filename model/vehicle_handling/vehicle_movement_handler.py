@@ -81,37 +81,80 @@ def input_handler(vehicle):
 def collision_and_boundary_handler(vehicle, other_vehicles):
     collided_vehicle = cb.check_all_collision(vehicle, other_vehicles)
     if collided_vehicle is not None:
-        collided_vehicle.reaction_x_vel = int(round(vehicle.input_x_vel * 14 / 13))
-        collided_vehicle.reaction_y_vel = int(round(vehicle.input_y_vel * 14 / 13))
-        collided_vehicle.reaction_on_input_x_vel()
-        collided_vehicle.reaction_on_input_y_vel()
+        # collided_vehicle.reaction_x_vel = int(round(vehicle.input_x_vel * 14 / 13))
+        # collided_vehicle.reaction_y_vel = int(round(vehicle.input_y_vel * 14 / 13))
+
+        # collided_vehicle.reaction_on_input_x_vel()
+        # collided_vehicle.reaction_on_input_y_vel()
         # vehicle.input_x_vel = 0
         # vehicle.input_y_vel = 0
-        vehicle.reaction_x_vel = int(round(collided_vehicle.cur_x_vel * 13 / 13))
-        if not vehicle.reaction_on_input_x_vel():
-            vehicle.x -= vehicle.cur_x_vel
-            # collided_vehicle.x += vehicle.cur_x_vel
+        # vehicle.reaction_x_vel = int(round(collided_vehicle.cur_x_vel * 13 / 13))
+        if vehicle.x > collided_vehicle.x:
+            if vehicle.y > collided_vehicle.y:
+                if abs(vehicle.x - (collided_vehicle.x + collided_vehicle.w)) > \
+                        abs(vehicle.y - (collided_vehicle.y + collided_vehicle.l)):
+                    vehicle.y = collided_vehicle.y + collided_vehicle.l
+                else:
+                    vehicle.x = collided_vehicle.x + collided_vehicle.w
+            else:
+                if abs(vehicle.x - (collided_vehicle.x + collided_vehicle.w)) > \
+                        abs((vehicle.y + vehicle.l) - collided_vehicle.y):
+                    vehicle.y = collided_vehicle.y - vehicle.l
+                else:
+                    vehicle.x = collided_vehicle.x + collided_vehicle.w
         else:
-            # while cb.check_collision(vehicle, collided_vehicle):
-            vehicle.x -= vehicle.cur_x_vel
-            collided_vehicle.x += vehicle.cur_x_vel
+            if vehicle.y > collided_vehicle.y:
+                if abs((vehicle.x + vehicle.w) - collided_vehicle.x) > \
+                        abs(vehicle.y - (collided_vehicle.y + collided_vehicle.l)):
+                    vehicle.y = collided_vehicle.y + collided_vehicle.l
+                else:
+                    vehicle.x = collided_vehicle.x - vehicle.w
+            else:
+                if abs((vehicle.x + vehicle.w) - collided_vehicle.x) > \
+                        abs((vehicle.y + vehicle.l) - collided_vehicle.y):
+                    vehicle.y = collided_vehicle.y - vehicle.l
+                else:
+                    vehicle.x = collided_vehicle.x - vehicle.w
+
+        # if not vehicle.reaction_on_input_x_vel():
+        #     vehicle.x -= vehicle.cur_x_vel
+        #     # collided_vehicle.x += vehicle.cur_x_vel
+        # else:
+        #     # while cb.check_collision(vehicle, collided_vehicle):
+        #     vehicle.x -= vehicle.cur_x_vel
+        #     collided_vehicle.x += vehicle.cur_x_vel
                 # print(vehicle.x, ":", collided_vehicle.x)
         #     if cb.check_collision(vehicle, collided_vehicle):
+        # if abs(vehicle.x - collided_vehicle.x) < abs(vehicle.x + vehicle.w - collided_vehicle.x):
+        #     if abs(vehicle.y - collided_vehicle.y) < abs(vehicle.y + vehicle.l - collided_vehicle.y):
 
+            # if vehicle.y < collided_vehicle.y: # and abs(vehicle.x - collided_vehicle.x) > abs(
+            #        # vehicle.y + vehicle.w - collided_vehicle.y):
+            #     vehicle.y = collided_vehicle.y - vehicle.l - 1
+            # elif vehicle.y > collided_vehicle.y: #and abs(vehicle.x - collided_vehicle.x) > abs(
+            #         # vehicle.y - collided_vehicle.y):
+            #     vehicle.y = collided_vehicle.y + collided_vehicle.l + 1
+        # else:
+        #     if vehicle.y < collided_vehicle.y and abs(vehicle.x - collided_vehicle.x) > abs(
+        #             vehicle.y + vehicle.w - collided_vehicle.y):
+        #         vehicle.y = collided_vehicle.y - vehicle.l - 1
+        #     elif vehicle.y > collided_vehicle.y and abs(vehicle.x - collided_vehicle.x) > abs(
+        #             vehicle.y - collided_vehicle.y):
+        #         vehicle.y = collided_vehicle.y + collided_vehicle.l + 1
         # if vehicle.x < collided_vehicle.x and abs(vehicle.x + int(round(vehicle.w / 2)) -
         #                                           collided_vehicle.x + int(round(collided_vehicle.w / 2)) >
         #                                           abs(vehicle.y collided_vehicle - collided_vehicle.y):
         #     vehicle.x = collided_vehicle.x - vehicle.w - 1
         # elif vehicle.x > collided_vehicle.x and abs(vehicle.x - collided_vehicle.x + collided_vehicle.w) < abs(vehicle.y - collided_vehicle.y):
         #     vehicle.x = collided_vehicle.x + collided_vehicle.w + 1
-        vehicle.reaction_y_vel = int(round(collided_vehicle.cur_y_vel * 13 / 13))
-        if not vehicle.reaction_on_input_y_vel():
-            vehicle.y -= vehicle.cur_y_vel
-            # collided_vehicle.y += vehicle.cur_y_vel
-        else:
-            # while cb.check_collision(vehicle, collided_vehicle):
-            vehicle.y -= vehicle.cur_y_vel
-            collided_vehicle.y += vehicle.cur_y_vel
+        # vehicle.reaction_y_vel = int(round(collided_vehicle.cur_y_vel * 13 / 13))
+        # if not vehicle.reaction_on_input_y_vel():
+        #     vehicle.y -= vehicle.cur_y_vel
+        #     # collided_vehicle.y += vehicle.cur_y_vel
+        # else:
+        #     # while cb.check_collision(vehicle, collided_vehicle):
+        #     vehicle.y -= vehicle.cur_y_vel
+        #     collided_vehicle.y += vehicle.cur_y_vel
         # if vehicle.y < collided_vehicle.y and abs(vehicle.x - collided_vehicle.x) > abs(
         #         vehicle.y + vehicle.w - collided_vehicle.y):
         #     vehicle.y = collided_vehicle.y - vehicle.l - 1
