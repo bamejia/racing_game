@@ -8,17 +8,13 @@ import pygame
 # from OpenGL.GLU import *
 
 
-class View:
-    def __init__(self):
-        pygame.init()
-        pygame.key.set_repeat(1, 1)
+class GameView:
+    def __init__(self, window):
 
-        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (gv.WINDOW_X_POS, gv.WINDOW_Y_POS)
+        self.display = window.display
+        # self.display.set_caption(gv.WINDOW_NAME)
 
-        self.display = pygame.display
-        self.display.set_caption(gv.WINDOW_NAME)
-
-        self.surface = pygame.display.set_mode(gv.WINDOW_SIZE)
+        self.surface = window.surface
         # surface = pygame.display.set_mode(WINDOW_SIZE, pygame.DOUBLEBUF|pygame.OPENGL)
         self.street = pygame.Surface(gv.ROAD_DIMENSIONS, pygame.OPENGL)
         # street.blit(pygame.image.load(""))
@@ -76,9 +72,7 @@ class View:
             gv.MOVEMENT_PATTERNS[8]: speed_demon_car
         }
 
-        self.clock = pygame.time.Clock()
-
-    # methods
+    """ METHODS """
     def update(self, vehicles):
         display_race(self, vehicles)
 
@@ -91,7 +85,7 @@ class View:
         self.display.update()
         # print(self.clock.get_fps())
 
-    # getters
+    """ GETTERS """
     @property
     def display(self):
         return self.__display
@@ -108,11 +102,7 @@ class View:
     def vehicle_types(self):
         return self.__vehicle_types
 
-    @property
-    def clock(self):
-        return self.__clock
-
-    # setters
+    """ SETTERS """
     @display.setter
     def display(self, display):
         self.__display = display
@@ -128,7 +118,3 @@ class View:
     @vehicle_types.setter
     def vehicle_types(self, vehicle_types):
         self.__vehicle_types = vehicle_types
-
-    @clock.setter
-    def clock(self, clock):
-        self.__clock = clock

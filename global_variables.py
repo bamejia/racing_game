@@ -1,4 +1,5 @@
 from win32api import GetSystemMetrics
+import pygame
 
 
 # Whether to pause or not
@@ -10,13 +11,29 @@ WINDOW_X_POS = 300
 WINDOW_Y_POS = 100
 WINDOW_W_RATIO = 5/8
 WINDOW_L_RATIO = 4/5
-WINDOW_W, WINDOW_L = WINDOW_SIZE = int(round(GetSystemMetrics(0) * WINDOW_W_RATIO)),\
-                                                          int(round(GetSystemMetrics(1) * WINDOW_L_RATIO))
+WINDOW_W, WINDOW_L = WINDOW_SIZE = round(GetSystemMetrics(0) * WINDOW_W_RATIO),\
+                                                          round(GetSystemMetrics(1) * WINDOW_L_RATIO)
+
+# title screen variables
+TITLE_TEXT = "RACING GAME"
+TITLE_TEXT_SIZE = 140
+TITLE_FONT = None
+AUTHOR_TEXT = "by bamxmejia"
+AUTHOR_TEXT_SIZE = 100
+AUTHOR_FONT = None
+P1_BUTTON_TEXT = "1 PLAYER START"
+P2_BUTTON_TEXT = "2 PLAYER START"
+OPTIONS_BUTTON_TEXT = "OPTIONS"
+EXIT_BUTTON_TEXT = "EXIT"
+BUTTON_TEXT_SIZE = 80
+BUTTON_FONT = None
+
+
 
 # road variables
 ROAD_W_RATIO = 3/5
-ROAD_W, ROAD_L = ROAD_DIMENSIONS = (int(round(WINDOW_W*ROAD_W_RATIO)), int(round(WINDOW_L)))
-ROAD_X_PLACEMENT = (int(round(WINDOW_W * (1 - ROAD_W_RATIO) / 2)))
+ROAD_W, ROAD_L = ROAD_DIMENSIONS = (round(WINDOW_W*ROAD_W_RATIO), round(WINDOW_L))
+ROAD_X_PLACEMENT = (round(WINDOW_W * (1 - ROAD_W_RATIO) / 2))
 
 
 # colors

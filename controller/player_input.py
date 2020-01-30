@@ -5,6 +5,16 @@ import global_variables as gv
 import sys
 
 
+def title_screen_input(events):
+    for event in events:
+        keys = pygame.key.get_pressed()
+        # num_of_keys = keys.count(True)
+
+        if event.type == pygame.QUIT or keys[pygame.K_ESCAPE]:
+            pygame.quit()
+            sys.exit()
+
+
 def player_input(player, events):
     for event in events:
         keys = pygame.key.get_pressed()

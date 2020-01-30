@@ -2,7 +2,7 @@ from model.vehicle_handling.vehicle import Player, Enemy
 from model.vehicle_handling.spawn_enemies import spawn_chance
 
 
-class Model:
+class GameModel:
     # player = Player(400, 400, 20, 20, 1, 8, 1, 8)
     # vehicles.append(Enemy(1, "enemy car", 400, 500))
     def __init__(self):
