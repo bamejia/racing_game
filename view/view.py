@@ -32,6 +32,10 @@ class View:
         player_car = pygame.transform.rotate(player_car, 90)
         player_car = pygame.transform.scale(player_car, (gv.PLAYER_WIDTH, gv.PLAYER_LENGTH))  # (30, 60)
 
+        player2_car = pygame.image.load("Images/car/blue car.png")
+        player2_car = pygame.transform.rotate(player2_car, 90)
+        player2_car = pygame.transform.scale(player2_car, (gv.PLAYER_WIDTH, gv.PLAYER_LENGTH))  # (30, 60)
+
         random_enemy_car = pygame.image.load("Images/car/purple car.png")
         random_enemy_car = pygame.transform.rotate(random_enemy_car, 90)
         random_enemy_car = pygame.transform.scale(random_enemy_car, (gv.ENEMY_WIDTH, gv.ENEMY_LENGTH))
@@ -62,13 +66,14 @@ class View:
 
         self.vehicle_types = {
             gv.MOVEMENT_PATTERNS[0]: player_car,
-            gv.MOVEMENT_PATTERNS[1]: random_enemy_car,
-            gv.MOVEMENT_PATTERNS[2]: side_to_side_enemy_car,
-            gv.MOVEMENT_PATTERNS[3]: up_and_down_enemy_car,
-            gv.MOVEMENT_PATTERNS[4]: diagonal_enemy_car,
-            gv.MOVEMENT_PATTERNS[5]: tracker_enemy_car,
-            gv.MOVEMENT_PATTERNS[6]: static_enemy_car,
-            gv.MOVEMENT_PATTERNS[7]: speed_demon_car
+            gv.MOVEMENT_PATTERNS[1]: player2_car,
+            gv.MOVEMENT_PATTERNS[2]: random_enemy_car,
+            gv.MOVEMENT_PATTERNS[3]: side_to_side_enemy_car,
+            gv.MOVEMENT_PATTERNS[4]: up_and_down_enemy_car,
+            gv.MOVEMENT_PATTERNS[5]: diagonal_enemy_car,
+            gv.MOVEMENT_PATTERNS[6]: tracker_enemy_car,
+            gv.MOVEMENT_PATTERNS[7]: static_enemy_car,
+            gv.MOVEMENT_PATTERNS[8]: speed_demon_car
         }
 
         self.clock = pygame.time.Clock()
@@ -76,7 +81,11 @@ class View:
     # methods
     def update(self, vehicles):
         display_race(self, vehicles)
+
+        if vehicles[1].movement_pattern == "player2":
+            display_health(self.surface, vehicles[1])
         display_health(self.surface, vehicles[0])
+
         display_score(self, vehicles[0])
 
         self.display.update()

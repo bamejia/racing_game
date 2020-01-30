@@ -35,9 +35,9 @@ TURQOISE = (0, 152, 154)
 
 
 # traffic variables
-TRAFFIC_SPEED = 2  # 2
+TRAFFIC_SPEED = 0  # 2
 FRICTION = 1
-REACTION_FRICTION = 3
+REACTION_FRICTION = 1
 FRICTION_MARKER = 7
 REACTION_SPEED_MAX = 12
 
@@ -62,6 +62,7 @@ ENEMY_STARTING_HEALTH = PLAYER_STARTING_HEALTH
 # car types
 MOVEMENT_PATTERNS = (
     "player",
+    "player2",
     "random",
     "side to side",
     "up and down",

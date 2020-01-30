@@ -6,7 +6,7 @@ class Model:
     # player = Player(400, 400, 20, 20, 1, 8, 1, 8)
     # vehicles.append(Enemy(1, "enemy car", 400, 500))
     def __init__(self):
-        self.vehicles = [Player(0), Player(1, x=600)]
+        self.vehicles = [Player(0), Player(1, "player2", x=600)]
         self.player = self.vehicles[0]
 
     """ methods """

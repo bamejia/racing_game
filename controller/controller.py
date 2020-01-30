@@ -1,5 +1,4 @@
-from controller.player_input import player_input
-from controller.player2_input import player_input2
+from controller.player_input import player_input, player_input2
 from controller.enemy_input import enemy_input
 from model.model import Model
 from view.view import View
@@ -28,6 +27,7 @@ class Controller:
 
             has_not_quit_game = player_input(self.model.vehicles[0], events)
             player_input2(self.model.vehicles[1], events)
+            # print(self.model.player.cur_x_vel, self.model.player.reaction_x_vel, self.model.player.cur_y_vel, self.model.player.reaction_y_vel)
 
             enemy_input(self.model.vehicles)
 

@@ -310,11 +310,14 @@ class Vehicle:
             else:
                 self.__input_x_vel += acceleration
 
+    """ if input_x_vel and reaction_x_vel are in the same direction, returns False, else True"""
     def reaction_on_input_x_vel(self):
-        if (self.__input_x_vel < 0 and self.__reaction_x_vel < 0) or (self.__input_x_vel > 0 and self.__reaction_x_vel > 0):
-            self.__input_x_vel = int(round(self.input_x_vel + self.__reaction_x_vel / 2))
+        if (self.__input_x_vel < 0 and self.__reaction_x_vel < 0) or (self.__input_x_vel >= 0 and self.__reaction_x_vel >= 0):
+            self.__input_x_vel = int(round(self.__reaction_x_vel * 13 / 13))  #int(round((self.__input_x_vel + self.__reaction_x_vel) / 2))
+            return False
         else:
-            self.__input_x_vel = self.__input_x_vel - self.__reaction_x_vel
+            self.__input_x_vel = self.__input_x_vel + self.__reaction_x_vel
+            return True
 
     def friction_on_input_x_vel(self, input_x_vel):
         self.__input_x_vel = input_x_vel
@@ -328,18 +331,29 @@ class Vehicle:
         #     self.__input_y_vel = -1 * self.max_speed  # - abs(self.reaction_y_vel)
 
     def acceleration_on_input_y_vel(self, acceleration):
-        if self.__input_y_vel + acceleration > self.max_speed:
+        if self.__input_y_vel + acceleration > int(round(self.max_speed / 2)):
             return
         elif self.__input_y_vel + acceleration < -1 * self.max_speed:
             return
         else:
             self.__input_y_vel += acceleration
 
+    """ if input_y_vel and reaction_y_vel are in the same direction, returns False, else True"""
     def reaction_on_input_y_vel(self):
-        if (self.__input_y_vel < 0 and self.__reaction_y_vel < 0) or (self.__reaction_y_vel > 0 and self.__reaction_y_vel > 0):
-            self.__input_y_vel = int(round(self.input_x_vel + self.__reaction_y_vel / 2))
+        if (self.__input_y_vel < 0 and self.__reaction_y_vel < 0) or (self.__input_y_vel >= 0 and self.__reaction_y_vel >= 0):
+            self.__input_y_vel = int(round(self.__reaction_y_vel * 13 / 13))   #int(round((self.input_y_vel + self.__reaction_y_vel) / 2))
+            return False
         else:
-            self.__input_y_vel = self.__input_y_vel - self.__reaction_y_vel
+            self.__input_y_vel = self.__input_y_vel + self.__reaction_y_vel
+            return True
+
+    def off_road_on_input_y_vel(self, off_road_y):
+        if self.__input_y_vel + off_road_y > self.max_speed:
+            return
+        elif self.__input_y_vel + off_road_y < -1 * self.max_speed:
+            return
+        else:
+            self.__input_y_vel += off_road_y
 
     def friction_on_input_y_vel(self, input_y_vel):
         self.__input_y_vel = input_y_vel

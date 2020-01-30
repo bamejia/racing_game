@@ -81,18 +81,43 @@ def input_handler(vehicle):
 def collision_and_boundary_handler(vehicle, other_vehicles):
     collided_vehicle = cb.check_all_collision(vehicle, other_vehicles)
     if collided_vehicle is not None:
-        collided_vehicle.reaction_x_vel = int(round(vehicle.input_x_vel * 7 / 13))
+        collided_vehicle.reaction_x_vel = int(round(vehicle.input_x_vel * 14 / 13))
+        collided_vehicle.reaction_y_vel = int(round(vehicle.input_y_vel * 14 / 13))
         collided_vehicle.reaction_on_input_x_vel()
-        collided_vehicle.reaction_y_vel = int(round(vehicle.input_y_vel * 7 / 13))
         collided_vehicle.reaction_on_input_y_vel()
-        vehicle.x -= vehicle.cur_x_vel
-        vehicle.y -= vehicle.cur_y_vel
         # vehicle.input_x_vel = 0
         # vehicle.input_y_vel = 0
-        vehicle.reaction_x_vel = int(round(collided_vehicle.cur_x_vel * 6 / 13))
-        vehicle.reaction_on_input_x_vel()
-        vehicle.reaction_y_vel = int(round(collided_vehicle.cur_y_vel * 6 / 13))
-        vehicle.reaction_on_input_y_vel()
+        vehicle.reaction_x_vel = int(round(collided_vehicle.cur_x_vel * 13 / 13))
+        if not vehicle.reaction_on_input_x_vel():
+            vehicle.x -= vehicle.cur_x_vel
+            # collided_vehicle.x += vehicle.cur_x_vel
+        else:
+            # while cb.check_collision(vehicle, collided_vehicle):
+            vehicle.x -= vehicle.cur_x_vel
+            collided_vehicle.x += vehicle.cur_x_vel
+                # print(vehicle.x, ":", collided_vehicle.x)
+        #     if cb.check_collision(vehicle, collided_vehicle):
+
+        # if vehicle.x < collided_vehicle.x and abs(vehicle.x + int(round(vehicle.w / 2)) -
+        #                                           collided_vehicle.x + int(round(collided_vehicle.w / 2)) >
+        #                                           abs(vehicle.y collided_vehicle - collided_vehicle.y):
+        #     vehicle.x = collided_vehicle.x - vehicle.w - 1
+        # elif vehicle.x > collided_vehicle.x and abs(vehicle.x - collided_vehicle.x + collided_vehicle.w) < abs(vehicle.y - collided_vehicle.y):
+        #     vehicle.x = collided_vehicle.x + collided_vehicle.w + 1
+        vehicle.reaction_y_vel = int(round(collided_vehicle.cur_y_vel * 13 / 13))
+        if not vehicle.reaction_on_input_y_vel():
+            vehicle.y -= vehicle.cur_y_vel
+            # collided_vehicle.y += vehicle.cur_y_vel
+        else:
+            # while cb.check_collision(vehicle, collided_vehicle):
+            vehicle.y -= vehicle.cur_y_vel
+            collided_vehicle.y += vehicle.cur_y_vel
+        # if vehicle.y < collided_vehicle.y and abs(vehicle.x - collided_vehicle.x) > abs(
+        #         vehicle.y + vehicle.w - collided_vehicle.y):
+        #     vehicle.y = collided_vehicle.y - vehicle.l - 1
+        # elif vehicle.y > collided_vehicle.y and abs(vehicle.x - collided_vehicle.x) > abs(
+        #         vehicle.y - collided_vehicle.y):
+        #     vehicle.y = collided_vehicle.y + collided_vehicle.l + 1
         vehicle.health -= 5
         collided_vehicle.health -= 5
 
@@ -103,55 +128,56 @@ def collision_and_boundary_handler(vehicle, other_vehicles):
     cb.check_boundary(vehicle)
 
     if not cb.check_on_road(vehicle):  # Check if off road to add more friction
-        vehicle.input_y_vel += 1
+        vehicle.off_road_on_input_y_vel(1)
         # vehicle.reaction_y_vel += 1
 
 
 def friction_handler(vehicle):
     # FRICTION
+    # if vehicle.input_x_vel == 0 or vehicle.input_y_vel == 0:
     vehicle.friction_count = (vehicle.friction_count+1) % (vehicle.friction_marker + 1)
-    if vehicle.friction_count != vehicle.friction_marker:
-        return
+    # else:
+    #     vehicle.friction_count = 0
+    if vehicle.friction_count == vehicle.friction_marker:
+        if vehicle.input_x_vel > 0:
+            if vehicle.input_x_vel - gv.FRICTION < 0:
+                vehicle.friction_on_input_x_vel(0)
+            else:
+                vehicle.friction_on_input_x_vel(vehicle.input_x_vel - gv.FRICTION)
+        elif vehicle.input_x_vel < 0:
+            if vehicle.input_x_vel + gv.FRICTION > 0:
+                vehicle.friction_on_input_x_vel(0)
+            else:
+                vehicle.friction_on_input_x_vel(vehicle.input_x_vel + gv.FRICTION)
+        if vehicle.input_y_vel > 0:
+            if vehicle.input_y_vel - gv.FRICTION < 0:
+                vehicle.friction_on_input_y_vel(0)
+            else:
+                vehicle.friction_on_input_y_vel(vehicle.input_y_vel - gv.FRICTION)
+        elif vehicle.input_y_vel < 0:
+            if vehicle.input_y_vel + gv.FRICTION > 0:
+                vehicle.friction_on_input_y_vel(0)
+            else:
+                vehicle.friction_on_input_y_vel(vehicle.input_y_vel + gv.FRICTION)
 
-    if vehicle.input_x_vel > 0:
-        if vehicle.input_x_vel - gv.FRICTION < 0:
-            vehicle.friction_on_input_x_vel(0)
-        else:
-            vehicle.friction_on_input_x_vel(vehicle.input_x_vel - gv.FRICTION)
-    elif vehicle.input_x_vel < 0:
-        if vehicle.input_x_vel + gv.FRICTION > 0:
-            vehicle.friction_on_input_x_vel(0)
-        else:
-            vehicle.friction_on_input_x_vel(vehicle.input_x_vel + gv.FRICTION)
-    if vehicle.input_y_vel > 0:
-        if vehicle.input_y_vel - gv.FRICTION < 0:
-            vehicle.friction_on_input_y_vel(0)
-        else:
-            vehicle.friction_on_input_y_vel(vehicle.input_y_vel - gv.FRICTION)
-    elif vehicle.input_y_vel < 0:
-        if vehicle.input_y_vel + gv.FRICTION > 0:
-            vehicle.friction_on_input_y_vel(0)
-        else:
-            vehicle.friction_on_input_y_vel(vehicle.input_y_vel + gv.FRICTION)
-
-    # FRICTION on Reaction
-    if vehicle.reaction_x_vel > 0:
-        if vehicle.reaction_x_vel - gv.REACTION_FRICTION < 0:
-            vehicle.reaction_x_vel = 0
-        else:
-            vehicle.reaction_x_vel -= gv.REACTION_FRICTION
-    elif vehicle.reaction_x_vel < 0:
-        if vehicle.reaction_x_vel + gv.REACTION_FRICTION > 0:
-            vehicle.reaction_x_vel = 0
-        else:
-            vehicle.reaction_x_vel += gv.REACTION_FRICTION
-    if vehicle.reaction_y_vel > 0:
-        if vehicle.reaction_y_vel - gv.REACTION_FRICTION < 0:
-            vehicle.reaction_y_vel = 0
-        else:
-            vehicle.reaction_y_vel -= gv.REACTION_FRICTION
-    elif vehicle.reaction_y_vel < 0:
-        if vehicle.reaction_y_vel + gv.REACTION_FRICTION > 0:
-            vehicle.reaction_y_vel = 0
-        else:
-            vehicle.reaction_y_vel += gv.REACTION_FRICTION
+        # FRICTION on Reaction
+        if vehicle.reaction_x_vel > 0:
+            if vehicle.reaction_x_vel - gv.REACTION_FRICTION < 0:
+                vehicle.reaction_x_vel = 0
+            else:
+                vehicle.reaction_x_vel -= gv.REACTION_FRICTION
+        elif vehicle.reaction_x_vel < 0:
+            if vehicle.reaction_x_vel + gv.REACTION_FRICTION > 0:
+                vehicle.reaction_x_vel = 0
+            else:
+                vehicle.reaction_x_vel += gv.REACTION_FRICTION
+        if vehicle.reaction_y_vel > 0:
+            if vehicle.reaction_y_vel - gv.REACTION_FRICTION < 0:
+                vehicle.reaction_y_vel = 0
+            else:
+                vehicle.reaction_y_vel -= gv.REACTION_FRICTION
+        elif vehicle.reaction_y_vel < 0:
+            if vehicle.reaction_y_vel + gv.REACTION_FRICTION > 0:
+                vehicle.reaction_y_vel = 0
+            else:
+                vehicle.reaction_y_vel += gv.REACTION_FRICTION
