@@ -1,9 +1,9 @@
 import pygame
 import global_variables as gv
 
-btn_x_left_ratio = 1 / 40
-btn_x_right_ratio = 42 / 40
-btn_y_top_ratio = 5 / 50
+btn_x_left_ratio = 1 / 50
+btn_x_right_ratio = 52 / 50
+btn_y_top_ratio = 4 / 50
 btn_y_bottom_ratio = 51 / 50
 
 

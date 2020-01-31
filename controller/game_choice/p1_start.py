@@ -31,5 +31,5 @@ def p1_start(window):
         #     pygame.quit()
         #     sys.exit()
 
-        print(window.clock.get_fps())
+        # print(window.clock.get_fps())
         window.clock.tick(120)

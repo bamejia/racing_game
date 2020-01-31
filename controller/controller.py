@@ -1,4 +1,4 @@
-from controller.player_input import player_input, player_input2, title_screen_input
+from controller.player_input import title_screen_input
 from controller.player_mouse_input import title_screen_mouse_input
 from view.title_screen_view import TitleScreenView
 from view.window import Window
@@ -44,6 +44,8 @@ class Controller:
             if btn_choice == self.choice[3]:
                 pygame.quit()
                 sys.exit()
+
+            # print(self.window.clock.get_fps())
 
             self.window.clock.tick(120)
 
