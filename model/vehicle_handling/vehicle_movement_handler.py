@@ -127,8 +127,8 @@ def collision_and_boundary_handler(vehicle, other_vehicles):
                 else:
                     vehicle.x = collided_vehicle.x - vehicle.w
 
-        vehicle.health -= 5
-        collided_vehicle.health -= 5
+        vehicle.health -= 1
+        collided_vehicle.health -= 1
 
     # vehicle.x_input_against_x_reaction()
     # vehicle.y_input_against_y_reaction()
