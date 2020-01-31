@@ -29,11 +29,13 @@ class GameModel:
 
         if self.player.is_below_screen():
             self.player.health -= 10
+        if self.player2 is not None and self.player2.is_below_screen():
+            self.player2.health -= 10
 
         self.player.score += 1
 
-    def check_if_player_is_alive(self):
-        return self.player.is_alive()
+    def check_if_player_is_alive(self, player):
+        return player.is_alive()
 
     """ getters """
     @property

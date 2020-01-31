@@ -4,6 +4,7 @@ from model.game_model import GameModel
 from controller.player_input import player_input
 from controller.enemy_input import enemy_input
 from model.vehicle_handling.spawn_enemies import spawn_chance
+import time
 
 
 def p1_start(window):
@@ -26,10 +27,9 @@ def p1_start(window):
         game_model.update()
         game_view.update(game_model.vehicles)
 
-        # if not self.game_model.check_if_player_is_alive():
-        #     time.sleep(2) # temp
-        #     pygame.quit()
-        #     sys.exit()
+        if not game_model.check_if_player_is_alive(game_model.player):
+            time.sleep(2.2)
+            break
 
         # print(window.clock.get_fps())
         window.clock.tick(120)
