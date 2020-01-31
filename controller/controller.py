@@ -4,6 +4,7 @@ from view.title_screen_view import TitleScreenView
 from view.window import Window
 from controller.game_choice.p1_start import p1_start
 from controller.game_choice.p2_start import p2_start
+from controller.game_choice.option_menu import option_menu
 import pygame
 import sys
 import global_variables as gv
@@ -33,13 +34,14 @@ class Controller:
             title_screen_input(events)
 
             """ 1 PLAYER START chosen """
-            if btn_choice == self.__choice[0]:
+            if btn_choice == self.choice[0]:
                 p1_start(self.window)
             """ 2 PLAYER START chosen """
-            if btn_choice == self.__choice[1]:
+            if btn_choice == self.choice[1]:
                 p2_start(self.window)
             """ OPTIONS chosen """
-
+            if btn_choice == self.choice[2]:
+                option_menu(self.window)
             """ EXIT chosen """
             if btn_choice == self.choice[3]:
                 pygame.quit()

@@ -83,9 +83,12 @@ def input_handler(vehicle):
 
 def collision_and_boundary_handler(vehicle, other_vehicles):
     collided_vehicle = cb.check_all_collision(vehicle, other_vehicles)
-    if collided_vehicle is not None:
-        collided_reaction_ratio = 4 / 13
-        vehicle_reaction_ratio = 12 / 13
+    while collided_vehicle is not None:
+        collided_reaction_ratio = 2 / 13
+        vehicle_reaction_ratio = 10 / 13
+
+        old_collided_x = collided_vehicle.x
+        old_collided_y = collided_vehicle.y
 
         collided_vehicle.reaction_x_vel = int(round(vehicle.cur_x_vel * collided_reaction_ratio))
         collided_vehicle.reaction_y_vel = int(round((vehicle.cur_y_vel - gv.TRAFFIC_SPEED) * collided_reaction_ratio))
@@ -98,37 +101,51 @@ def collision_and_boundary_handler(vehicle, other_vehicles):
 
         # vehicle.reaction_on_input_x_vel()
         # vehicle.reaction_on_input_y_vel()
+        extra_var = 1
 
         """ prevents cars from going into each other """
         if vehicle.x > collided_vehicle.x:
             if vehicle.y > collided_vehicle.y:
                 if abs(vehicle.x - (collided_vehicle.x + collided_vehicle.w)) > \
                         abs(vehicle.y - (collided_vehicle.y + collided_vehicle.l)):
-                    vehicle.y = collided_vehicle.y + collided_vehicle.l
+                    collided_vehicle.y = vehicle.y - collided_vehicle.l - extra_var
+                    vehicle.y = old_collided_y + collided_vehicle.l + extra_var
                 else:
-                    vehicle.x = collided_vehicle.x + collided_vehicle.w
+                    collided_vehicle.x = vehicle.x - collided_vehicle.w - extra_var
+                    vehicle.x = old_collided_x + collided_vehicle.w + extra_var
             else:
                 if abs(vehicle.x - (collided_vehicle.x + collided_vehicle.w)) > \
                         abs((vehicle.y + vehicle.l) - collided_vehicle.y):
-                    vehicle.y = collided_vehicle.y - vehicle.l
+                    collided_vehicle.y = vehicle.y + vehicle.l + extra_var
+                    vehicle.y = old_collided_y - vehicle.l - extra_var
                 else:
-                    vehicle.x = collided_vehicle.x + collided_vehicle.w
+                    collided_vehicle.x = vehicle.x - collided_vehicle.w - extra_var
+                    vehicle.x = old_collided_x + collided_vehicle.w + extra_var
         else:
             if vehicle.y > collided_vehicle.y:
                 if abs((vehicle.x + vehicle.w) - collided_vehicle.x) > \
                         abs(vehicle.y - (collided_vehicle.y + collided_vehicle.l)):
-                    vehicle.y = collided_vehicle.y + collided_vehicle.l
+                    collided_vehicle.y = vehicle.y - collided_vehicle.l - extra_var
+                    vehicle.y = old_collided_y + collided_vehicle.l + extra_var
                 else:
-                    vehicle.x = collided_vehicle.x - vehicle.w
+                    collided_vehicle.x = vehicle.x + vehicle.w + extra_var
+                    vehicle.x = old_collided_x - vehicle.w - extra_var
             else:
                 if abs((vehicle.x + vehicle.w) - collided_vehicle.x) > \
                         abs((vehicle.y + vehicle.l) - collided_vehicle.y):
-                    vehicle.y = collided_vehicle.y - vehicle.l
+                    collided_vehicle.y = vehicle.y + vehicle.l + extra_var
+                    vehicle.y = old_collided_y - vehicle.l - extra_var
                 else:
-                    vehicle.x = collided_vehicle.x - vehicle.w
-
+                    collided_vehicle.x = vehicle.x + vehicle.w + extra_var
+                    vehicle.x = old_collided_x - vehicle.w - extra_var
         vehicle.health -= 1
         collided_vehicle.health -= 1
+
+        """ checks to make sure new placement is not inside another vehicle """
+        collided_vehicle = cb.check_all_collision(vehicle, other_vehicles)
+        if collided_vehicle is not None:
+            print(collided_vehicle.movement_pattern)
+        # collided_vehicle = None
 
     # vehicle.x_input_against_x_reaction()
     # vehicle.y_input_against_y_reaction()

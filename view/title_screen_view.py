@@ -76,11 +76,12 @@ class TitleScreenView:
     """ METHODS """
     def show_screen(self, btn_hover, btn_press):
         self.surface.fill(gv.TANISH_YELLOW)
+        for i, item in enumerate(self.btn_colors):
+            self.btn_colors[i] = gv.ORANGE
         if btn_hover != -1:
-            self.btn_colors[btn_hover] = gv.YELLOW
-        else:
-            for i, item in enumerate(self.btn_colors):
-                self.btn_colors[i] = gv.ORANGE
+            self.btn_colors[btn_hover] = gv.MID_DARK_PEACH
+            if btn_press:
+                self.btn_colors[btn_hover] = gv.YELLOW
 
         text = self.title_font.render(gv.TITLE_TEXT, True, gv.RED)
         self.surface.blit(text, self.title_pos)
