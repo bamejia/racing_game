@@ -17,8 +17,6 @@ def vehicle_movement_handler(vehicle, other_vehicles):
     # Current Movement
     vehicle.x_input_against_x_reaction()
     vehicle.y_input_against_y_reaction()
-    # vehicle.reaction_on_input_x_vel()
-    # vehicle.reaction_on_input_y_vel()
 
     vehicle.cur_x_vel = vehicle.input_x_vel + vehicle.reaction_x_vel
     vehicle.cur_y_vel = vehicle.input_y_vel + gv.TRAFFIC_SPEED + vehicle.reaction_y_vel
@@ -93,14 +91,9 @@ def collision_and_boundary_handler(vehicle, other_vehicles):
         collided_vehicle.reaction_x_vel = int(round(vehicle.cur_x_vel * collided_reaction_ratio))
         collided_vehicle.reaction_y_vel = int(round((vehicle.cur_y_vel - gv.TRAFFIC_SPEED) * collided_reaction_ratio))
 
-        # collided_vehicle.reaction_on_input_x_vel()
-        # collided_vehicle.reaction_on_input_y_vel()
-
         vehicle.reaction_x_vel = int(round(collided_vehicle.cur_x_vel * vehicle_reaction_ratio))
         vehicle.reaction_y_vel = int(round((collided_vehicle.cur_y_vel - gv.TRAFFIC_SPEED) * vehicle_reaction_ratio))
 
-        # vehicle.reaction_on_input_x_vel()
-        # vehicle.reaction_on_input_y_vel()
         extra_var = 1
 
         """ prevents cars from going into each other """
@@ -143,12 +136,6 @@ def collision_and_boundary_handler(vehicle, other_vehicles):
 
         """ checks to make sure new placement is not inside another vehicle """
         collided_vehicle = cb.check_all_collision(vehicle, other_vehicles)
-        if collided_vehicle is not None:
-            print(collided_vehicle.movement_pattern)
-        # collided_vehicle = None
-
-    # vehicle.x_input_against_x_reaction()
-    # vehicle.y_input_against_y_reaction()
 
     # Check vehicle to remain within boundaries
     cb.check_boundary(vehicle)
@@ -160,10 +147,7 @@ def collision_and_boundary_handler(vehicle, other_vehicles):
 
 def friction_handler(vehicle):
     # FRICTION
-    # if vehicle.input_x_vel == 0 or vehicle.input_y_vel == 0:
     vehicle.friction_count = (vehicle.friction_count+1) % (vehicle.friction_marker + 1)
-    # else:
-    #     vehicle.friction_count = 0
     if vehicle.friction_count == vehicle.friction_marker:
         if vehicle.input_x_vel > 0:
             if vehicle.input_x_vel - gv.FRICTION < 0:

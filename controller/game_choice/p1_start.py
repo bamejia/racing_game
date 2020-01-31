@@ -18,9 +18,6 @@ def p1_start(window):
         spawn_chance(game_model.vehicles)
 
         has_not_quit_game = player_input(game_model.player, events)
-        # if player
-        # player_input2(self.game_model.vehicles[1], events)
-        # print(self.game_model.player.cur_x_vel, self.game_model.player.reaction_x_vel, self.game_model.player.cur_y_vel, self.game_model.player.reaction_y_vel)
 
         enemy_input(game_model.vehicles)
 

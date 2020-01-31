@@ -100,7 +100,14 @@ def diagonal_pattern(enemy):
 
 
 def tracker_pattern(enemy, vehicles):
+    choice = random.randint(0, 1)
     player = vehicles[0]
+    player2 = None
+    if vehicles[1].movement_pattern == "player2":
+        player2 = vehicles[1]
+        if choice == 1:
+            player = player2
+
     player_half_width = int(round(player.w / 2))
     player_half_length = int(round(player.l / 2))
     enemy_half_width = int(round(enemy.w / 2))

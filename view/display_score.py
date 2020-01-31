@@ -24,8 +24,4 @@ def display_score(view, vehicle):
     view.surface.blit(score_font.render(score, True, gv.WHITE, gv.BLACK),
                       (score_x_placement, score_y_placement))
 
-    # for i, item in enumerate(score):
-    #     view.surface.blit(score_font.render(score[i], 255, gv.WHITE, gv.BLACK),
-    #                       (score_x_placement + character_w * i, score_y_placement))
-
 
