@@ -76,14 +76,13 @@ class GameView:
     def update(self, vehicles):
         display_race(self, vehicles)
 
-        if vehicles[1].movement_pattern == "player2":
+        if len(vehicles) > 1 and vehicles[1].movement_pattern == "player2":
             display_health(self.surface, vehicles[1])
         display_health(self.surface, vehicles[0])
 
         display_score(self, vehicles[0])
 
         self.display.update()
-        # print(self.clock.get_fps())
 
     """ GETTERS """
     @property

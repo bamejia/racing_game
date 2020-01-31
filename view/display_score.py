@@ -21,8 +21,11 @@ def display_score(view, vehicle):
     score_x_placement = round((gv.WINDOW_W / 2) - (score_w / 2))
 
     """ renders each character spaced out by their individual widths """
-    for i, item in enumerate(score):
-        view.surface.blit(score_font.render(score[i], 255, gv.WHITE, gv.BLACK),
-                          (score_x_placement + character_w * i, score_y_placement))
+    view.surface.blit(score_font.render(score, True, gv.WHITE, gv.BLACK),
+                      (score_x_placement, score_y_placement))
+
+    # for i, item in enumerate(score):
+    #     view.surface.blit(score_font.render(score[i], 255, gv.WHITE, gv.BLACK),
+    #                       (score_x_placement + character_w * i, score_y_placement))
 
 

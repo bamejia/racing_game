@@ -4,10 +4,13 @@ from model.vehicle_handling.collision_and_boundaries import check_all_collision
 import global_variables as gv
 
 spawn_rate = 40  # higher is a lower spawn_rate
+spawn_max = 20
 
 
 def spawn_chance(vehicles, movement_pattern="random", x=None, y=None, w=gv.ENEMY_WIDTH, l=gv.ENEMY_LENGTH):
     index = len(vehicles)
+    if index >= spawn_max:
+        return
     if x is not None:
         if random.randint(1, spawn_rate) == 1:
             vehicle = spawn_random_enemy(index, movement_pattern, x, y, w, l)

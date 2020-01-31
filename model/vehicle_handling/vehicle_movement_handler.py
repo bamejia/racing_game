@@ -4,7 +4,7 @@ import global_variables as gv
 
 # final variables
 acceleration_marker = 0
-acceleration_MOD = 6
+acceleration_MOD = 7
 handling_marker = 0
 handling_MOD = 5
 
@@ -15,13 +15,13 @@ def vehicle_movement_handler(vehicle, other_vehicles):
     input_handler(vehicle)
 
     # Current Movement
-    # vehicle.x_input_against_x_reaction()
-    # vehicle.y_input_against_y_reaction()
-    vehicle.reaction_on_input_x_vel()
-    vehicle.reaction_on_input_y_vel()
+    vehicle.x_input_against_x_reaction()
+    vehicle.y_input_against_y_reaction()
+    # vehicle.reaction_on_input_x_vel()
+    # vehicle.reaction_on_input_y_vel()
 
-    vehicle.cur_x_vel = vehicle.input_x_vel # + vehicle.reaction_x_vel
-    vehicle.cur_y_vel = vehicle.input_y_vel + gv.TRAFFIC_SPEED #+ vehicle.reaction_y_vel
+    vehicle.cur_x_vel = vehicle.input_x_vel + vehicle.reaction_x_vel
+    vehicle.cur_y_vel = vehicle.input_y_vel + gv.TRAFFIC_SPEED + vehicle.reaction_y_vel
 
     # Update Position
     vehicle.x += vehicle.cur_x_vel
@@ -84,14 +84,17 @@ def input_handler(vehicle):
 def collision_and_boundary_handler(vehicle, other_vehicles):
     collided_vehicle = cb.check_all_collision(vehicle, other_vehicles)
     if collided_vehicle is not None:
-        # collided_vehicle.reaction_x_vel = int(round(vehicle.cur_x_vel * 13 / 13))
-        # collided_vehicle.reaction_y_vel = int(round((vehicle.cur_y_vel - gv.TRAFFIC_SPEED) * 13 / 13))
+        collided_reaction_ratio = 6 / 13
+        vehicle_reaction_ratio = 13 / 13
+
+        collided_vehicle.reaction_x_vel = int(round(vehicle.cur_x_vel * collided_reaction_ratio))
+        collided_vehicle.reaction_y_vel = int(round((vehicle.cur_y_vel - 0) * collided_reaction_ratio))
 
         # collided_vehicle.reaction_on_input_x_vel()
         # collided_vehicle.reaction_on_input_y_vel()
 
-        vehicle.reaction_x_vel = int(round(collided_vehicle.cur_x_vel * 13 / 13))
-        vehicle.reaction_y_vel = int(round((collided_vehicle.cur_y_vel - gv.TRAFFIC_SPEED) * 13 / 13))
+        vehicle.reaction_x_vel = int(round(collided_vehicle.cur_x_vel * vehicle_reaction_ratio))
+        vehicle.reaction_y_vel = int(round((collided_vehicle.cur_y_vel - 0) * vehicle_reaction_ratio))
 
         # vehicle.reaction_on_input_x_vel()
         # vehicle.reaction_on_input_y_vel()

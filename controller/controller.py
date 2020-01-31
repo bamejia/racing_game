@@ -1,9 +1,9 @@
 from controller.player_input import player_input, player_input2, title_screen_input
-from controller.enemy_input import enemy_input
-from model.game_model import GameModel
-from view.game_view import GameView
+from controller.player_mouse_input import title_screen_mouse_input
 from view.title_screen_view import TitleScreenView
 from view.window import Window
+from controller.game_choice.p1_start import p1_start
+from controller.game_choice.p2_start import p2_start
 import pygame
 import sys
 import global_variables as gv
@@ -16,39 +16,34 @@ class Controller:
     def __init__(self):
         self.__window = Window()
         self.__title_screen_view = object
-        self.__game_view = object
-        self.__game_model = object
+        self.__choice = (gv.BUTTON_TEXTS[0], gv.BUTTON_TEXTS[1], gv.BUTTON_TEXTS[2], gv.BUTTON_TEXTS[3])
 
     def run(self):
 
         title_screen_view = TitleScreenView(self.window)
 
-        has_not_quit_game = True
-        while has_not_quit_game:
-
+        while True:
             events = pygame.event.get()
+            mouse = pygame.mouse.get_pos()
+            click = pygame.mouse.get_pressed()
 
-            title_screen_view.show_screen()
+            btn_hover, btn_press, btn_choice = title_screen_mouse_input(title_screen_view, mouse, click)
+
+            title_screen_view.show_screen(btn_hover, btn_press)
             title_screen_input(events)
 
+            """ 1 PLAYER START chosen """
+            if btn_choice == self.__choice[0]:
+                p1_start(self.window)
+            """ 2 PLAYER START chosen """
+            if btn_choice == self.__choice[1]:
+                p2_start(self.window)
+            """ OPTIONS chosen """
 
-            # print(self.window.clock.get_fps())
-            #
-            # has_not_quit_game = player_input(self.game_model.vehicles[0], events)
-            # player_input2(self.game_model.vehicles[1], events)
-            # # print(self.game_model.player.cur_x_vel, self.game_model.player.reaction_x_vel, self.game_model.player.cur_y_vel, self.game_model.player.reaction_y_vel)
-            #
-            # enemy_input(self.game_model.vehicles)
-            #
-            # self.game_model.update()
-            # self.game_view.update(self.game_model.vehicles)
-
-            # if not self.game_model.check_if_player_is_alive():
-            #     time.sleep(2) # temp
-            #     pygame.quit()
-            #     sys.exit()
-
-            # print(self.game_view.clock.get_fps())
+            """ EXIT chosen """
+            if btn_choice == self.choice[3]:
+                pygame.quit()
+                sys.exit()
 
             self.window.clock.tick(120)
 
@@ -62,23 +57,15 @@ class Controller:
         return self.__title_screen_view
 
     @property
-    def game_view(self):
-        return self.__game_view
-
-    @property
-    def game_model(self):
-        return self.__game_model
+    def choice(self):
+        return self.__choice
 
     """ SETTERS """
     @title_screen_view.setter
     def title_screen_view(self, title_screen_view):
         self.__title_screen_view = title_screen_view
 
-    @game_view.setter
-    def game_view(self, game_view):
-        self.__game_view = game_view
-
-    @game_model.setter
-    def game_model(self, game_model):
-        self.__game_model = game_model
+    @choice.setter
+    def choice(self, choice):
+        self.__choice = choice
 

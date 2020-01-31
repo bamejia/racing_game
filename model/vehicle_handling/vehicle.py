@@ -196,22 +196,22 @@ class Vehicle:
     def x_input_against_x_reaction(self):
         if self.reaction_x_vel < 0 and self.input_x_vel < 0:
             self.__reaction_x_vel = self.reaction_x_vel - self.input_x_vel
-            # if self.__reaction_y_vel > 0:
-            #     self.__reaction_y_vel = 0
+            if self.__reaction_x_vel > 0:
+                self.__reaction_x_vel = 0
         elif self.reaction_x_vel > 0 and self.input_x_vel > 0:
             self.__reaction_x_vel = self.reaction_x_vel - self.input_x_vel
-            # if self.__reaction_y_vel < 0:
-            #     self.__reaction_y_vel = 0
+            if self.__reaction_y_vel < 0:
+                self.__reaction_y_vel = 0
         if self.reaction_x_vel > 0 and self.input_x_vel < 0:
             self.__reaction_x_vel = self.reaction_x_vel + self.input_x_vel
-            # if self.__reaction_y_vel < 0:
-            #     self.__reaction_y_vel = 0
+            if self.__reaction_y_vel < 0:
+                self.__reaction_y_vel = 0
         elif self.reaction_x_vel < 0 and self.input_x_vel > 0:
             self.__reaction_x_vel = self.reaction_x_vel + self.input_x_vel
-            # if self.__reaction_y_vel > 0:
-            #     self.__reaction_y_vel = 0
-        else:
-            self.__reaction_x_vel = self.input_x_vel
+            if self.__reaction_y_vel > 0:
+                self.__reaction_y_vel = 0
+        # else:
+        #     self.__reaction_x_vel = self.input_x_vel
 
     @reaction_x_vel.setter
     def reaction_x_vel(self, reaction_x_vel):
@@ -241,22 +241,22 @@ class Vehicle:
     def y_input_against_y_reaction(self):
         if self.reaction_y_vel > 0 and self.input_y_vel < 0:
             self.__reaction_y_vel = self.reaction_y_vel + self.input_y_vel
-            # if self.__reaction_y_vel < 0:
-            #     self.__reaction_y_vel = 0
+            if self.__reaction_y_vel < 0:
+                self.__reaction_y_vel = 0
         elif self.reaction_y_vel < 0 and self.input_y_vel > 0:
             self.__reaction_y_vel = self.reaction_y_vel + self.input_y_vel
-            # if self.__reaction_y_vel > 0:
-            #     self.__reaction_y_vel = 0
+            if self.__reaction_y_vel > 0:
+                self.__reaction_y_vel = 0
         if self.reaction_y_vel < 0 and self.input_y_vel < 0:
             self.__reaction_y_vel = self.reaction_y_vel - self.input_y_vel
-            # if self.__reaction_y_vel > 0:
-            #     self.__reaction_y_vel = 0
+            if self.__reaction_y_vel > 0:
+                self.__reaction_y_vel = 0
         elif self.reaction_y_vel > 0 and self.input_y_vel > 0:
             self.__reaction_y_vel = self.reaction_y_vel - self.input_y_vel
-            # if self.__reaction_y_vel < 0:
-            #     self.__reaction_y_vel = 0
-        else:
-            self.__reaction_y_vel = self.input_y_vel
+            if self.__reaction_y_vel < 0:
+                self.__reaction_y_vel = 0
+        # else:
+        #     self.__reaction_y_vel = self.input_y_vel
 
 
     @reaction_y_vel.setter
@@ -312,14 +312,14 @@ class Vehicle:
 
     """ if input_x_vel and reaction_x_vel are in the same direction, returns False, else True"""
     def reaction_on_input_x_vel(self):
-        if (self.__input_x_vel < 0 and self.__reaction_x_vel < 0) or (self.__input_x_vel > 0 and self.__reaction_x_vel > 0):
-            self.__input_x_vel = int(round((self.__reaction_x_vel + self.__input_x_vel) / 2))  #int(round((self.__input_x_vel + self.__reaction_x_vel) / 2))
-            return False
-        elif self.__input_x_vel == 0 and self.__reaction_x_vel == 0:
-            return
-        else:
-            self.__input_x_vel = self.__input_x_vel + self.__reaction_x_vel
-            return True
+        # if (self.__input_x_vel < 0 and self.__reaction_x_vel < 0) or (self.__input_x_vel > 0 and self.__reaction_x_vel > 0):
+        #     self.__input_x_vel = int(round((self.__reaction_x_vel + self.__input_x_vel) / 2))  #int(round((self.__input_x_vel + self.__reaction_x_vel) / 2))
+        #     return False
+        # elif self.__input_x_vel == 0 and self.__reaction_x_vel == 0:
+        #     return
+        # else:
+        self.__input_x_vel = self.__reaction_x_vel
+        return True
 
     def friction_on_input_x_vel(self, input_x_vel):
         self.__input_x_vel = input_x_vel
@@ -342,14 +342,14 @@ class Vehicle:
 
     """ if input_y_vel and reaction_y_vel are in the same direction, returns False, else True"""
     def reaction_on_input_y_vel(self):
-        if (self.__input_y_vel < 0 and self.__reaction_y_vel < 0) or (self.__input_y_vel > 0 and self.__reaction_y_vel > 0):
-            self.__input_y_vel = int(round((self.__reaction_y_vel + self.__input_y_vel) / 2))   #int(round((self.input_y_vel + self.__reaction_y_vel) / 2))
-            return False
-        elif self.__input_y_vel == 0 and self.__reaction_y_vel == 0:
-            return
-        else:
-            self.__input_y_vel = self.__input_y_vel + self.__reaction_y_vel
-            return True
+        # if (self.__input_y_vel < 0 and self.__reaction_y_vel < 0) or (self.__input_y_vel > 0 and self.__reaction_y_vel > 0):
+        #     self.__input_y_vel = int(round((self.__reaction_y_vel + self.__input_y_vel) / 2))   #int(round((self.input_y_vel + self.__reaction_y_vel) / 2))
+        #     return False
+        # elif self.__input_y_vel == 0 and self.__reaction_y_vel == 0:
+        #     return
+        # else:
+        self.__input_y_vel = self.__reaction_y_vel
+            # return True
 
     def off_road_on_input_y_vel(self, off_road_y):
         if self.__input_y_vel + off_road_y > self.max_speed:

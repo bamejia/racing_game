@@ -5,8 +5,13 @@ from model.vehicle_handling.spawn_enemies import spawn_chance
 class GameModel:
     # player = Player(400, 400, 20, 20, 1, 8, 1, 8)
     # vehicles.append(Enemy(1, "enemy car", 400, 500))
-    def __init__(self):
-        self.vehicles = [Player(0), Player(1, "player2", x=600)]
+    def __init__(self, num_players=1):
+        if num_players == 2:
+            self.vehicles = [Player(0), Player(1, "player2", x=600)]
+            self.player2 = self.vehicles[1]
+        else:
+            self.vehicles = [Player(0)]
+            self.player2 = None
         self.player = self.vehicles[0]
 
     """ methods """

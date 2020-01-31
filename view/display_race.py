@@ -5,7 +5,7 @@ line_width = 18
 line_length = 70
 blank_space = 120
 white_line_y_placement = -line_length - blank_space
-white_line_speed = int(round(gv.TRAFFIC_SPEED * 9 / 4))
+white_line_speed = round(gv.TRAFFIC_SPEED * 9 / 4)
 
 
 def display_race(view, vehicles):
@@ -25,9 +25,9 @@ def display_race(view, vehicles):
 
 def draw_white_lines(surface):
     global white_line_y_placement
-    white_line_x_placement = int(round(gv.ROAD_X_PLACEMENT + (gv.ROAD_W/ 2)))
-    quarter_road_w = int(round(gv.ROAD_W / 4))
-    half_line_width = int(round(line_width/2))
+    white_line_x_placement = round(gv.ROAD_X_PLACEMENT + (gv.ROAD_W/ 2))
+    quarter_road_w = round(gv.ROAD_W / 4)
+    half_line_width = round(line_width/2)
     i = 0
     while i < (line_length + blank_space) * 6:
         pygame.draw.rect(surface, gv.VERY_LIGHT_GREY, (white_line_x_placement - quarter_road_w - half_line_width,

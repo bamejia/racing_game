@@ -1,6 +1,6 @@
 from global_variables import WINDOW_L
 
-off_screen_distance = 150
+off_screen_distance = 100
 
 
 def check_if_below_screen(vehicle):
