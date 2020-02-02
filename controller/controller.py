@@ -1,5 +1,6 @@
 from controller.player_input import title_screen_input
 from controller.player_mouse_input import title_screen_mouse_input
+from controller.game_choice.online_start import online_start
 from view.title_screen_view import TitleScreenView
 from view.window import Window
 from controller.game_choice.p1_start import p1_start
@@ -41,11 +42,13 @@ class Controller:
                 p2_start(self.window)
             """ OPTIONS chosen """
             if btn_choice == self.choice[2]:
-                option_menu(self.window)
+                online_start(self.window, True)
+                # option_menu(self.window)
             """ EXIT chosen """
             if btn_choice == self.choice[3]:
-                pygame.quit()
-                sys.exit()
+                online_start(self.window)
+                # pygame.quit()
+                # sys.exit()
 
             # print(self.window.clock.get_fps())
 

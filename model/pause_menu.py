@@ -1,9 +1,14 @@
 import sys
 import pygame
 
+is_paused = False
 
-def pause(is_paused, escape_repeat, pause_repeat=False):
+
+def pause(input_is_paused):
+    pause_repeat = False
     clock = pygame.time.Clock()
+    global is_paused
+    is_paused = input_is_paused
     while is_paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -15,7 +20,8 @@ def pause(is_paused, escape_repeat, pause_repeat=False):
                 pause_repeat = True
             if keys[pygame.K_ESCAPE] or keys[pygame.K_BACKSPACE]:
                 escape_repeat[0] = False
-                return
+                return True
             if (keys[pygame.K_RETURN] or keys[pygame.K_t]) and pause_repeat:
                 is_paused = False
-    clock.tick(30)
+        clock.tick(30)
+    return False

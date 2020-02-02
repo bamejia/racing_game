@@ -16,9 +16,10 @@ class Dir(Enum):
     @staticmethod
     def opposite(input_dir):
         opposite = input_dir.value * -1
-        for direct in Dir:
-            if direct.value == opposite:
-                return direct
+        # for direct in Dir:
+        #     if direct.value == opposite:
+        #         return direct
+        return Dir(opposite)
 
     @staticmethod
     def inverse(input_dir):

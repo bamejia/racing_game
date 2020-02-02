@@ -22,16 +22,15 @@ def title_screen_input(events):
             sys.exit()
 
 
-def player_input(player, events):
+def player_input(events):
     global pause_repeat
     global escape_repeat
-    for event in events:
-        keys = pygame.key.get_pressed()
-        # num_of_keys = keys.count(True)
+    player_input_dir = Dir.NONE
+    keys = pygame.key.get_pressed()
 
+    for event in events:
         if not keys[pygame.K_RETURN] and not keys[pygame.K_t]:
             pause_repeat = True
-
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
@@ -39,32 +38,28 @@ def player_input(player, events):
             escape_repeat = False
             return False
         if keys[pygame.K_w] and not keys[pygame.K_a] and not keys[pygame.K_d] and not keys[pygame.K_s]:
-            player.input_direction = Dir.NORTH
+            player_input_dir = Dir.NORTH
         elif keys[pygame.K_w] and keys[pygame.K_d] and not keys[pygame.K_a] and not keys[pygame.K_s]:
-            player.input_direction = Dir.NORTHEAST
+            player_input_dir = Dir.NORTHEAST
         elif keys[pygame.K_d] and not keys[pygame.K_w] and not keys[pygame.K_a] and not keys[pygame.K_s]:
-            player.input_direction = Dir.EAST
+            player_input_dir = Dir.EAST
         elif keys[pygame.K_d] and keys[pygame.K_s] and not keys[pygame.K_a] and not keys[pygame.K_w]:
-            player.input_direction = Dir.SOUTHEAST
+            player_input_dir = Dir.SOUTHEAST
         elif keys[pygame.K_s] and not keys[pygame.K_w] and not keys[pygame.K_a] and not keys[pygame.K_d]:
-            player.input_direction = Dir.SOUTH
+            player_input_dir = Dir.SOUTH
         elif keys[pygame.K_a] and keys[pygame.K_s] and not keys[pygame.K_w] and not keys[pygame.K_d]:
-            player.input_direction = Dir.SOUTHWEST
+            player_input_dir = Dir.SOUTHWEST
         elif keys[pygame.K_a] and not keys[pygame.K_s] and not keys[pygame.K_w] and not keys[pygame.K_d]:
-            player.input_direction = Dir.WEST
+            player_input_dir = Dir.WEST
         elif keys[pygame.K_a] and not keys[pygame.K_s] and keys[pygame.K_w] and not keys[pygame.K_d]:
-            player.input_direction = Dir.NORTHWEST
+            player_input_dir = Dir.NORTHWEST
         else:
-            player.input_direction = Dir.NONE
+            player_input_dir = Dir.NONE
 
         if (keys[pygame.K_RETURN] or keys[pygame.K_t]) and pause_repeat:
             pause_repeat = False
-            escape_repeat_ref = [escape_repeat]
-            pause(True, escape_repeat_ref)
-            if not escape_repeat:
-                return False
-
-    return True
+            return True
+    return player_input_dir
 
 
 def player_input2(player, events):
