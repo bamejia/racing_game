@@ -178,7 +178,7 @@ class Enemy(Vehicle):
                  input_direction=Dir.NONE,
                  reaction_x_vel=0, reaction_y_vel=0,
                  cur_x_vel=0, cur_y_vel=0, cur_direction=Dir.NONE,
-                 friction_marker=0,
+                 friction_marker=gv.FRICTION_MARKER,
                  friction_count=0, acceleration_count=0, handling_count=0, score=0):
         if x is not None and y is None:
             super().__init__(index, movement_pattern, x, -l-1, w, l, acceleration, max_speed, handling, max_handling,

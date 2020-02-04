@@ -9,13 +9,26 @@ def check_if_player_is_alive(player):
 
 
 class GameModel:
+    """
+        Holds the values of all the current vehicles in the game,
+        as well as calculates their movements based on user input
+        that is passed when it updates
+    """
+
     # player = Player(400, 400, 20, 20, 1, 8, 1, 8)
     # vehicles.append(Enemy(1, "enemy car", 400, 500))
     def __init__(self, vehicles=None, player=None, player2=None, ready=True, num_players=1):
+        """  Creates a list of all vehicles spawned, including the player(s).
+             Creates variable(s) that point towards the player(s) to make finding them easier
+
+        Args:
+            vehicles (list):    holds all current Vehicle objects that have been spawned
+            player (Player):    references player1
+            player2 (Player):   references player2, if spawned, otherwise None
+            ready (bool):       for online multiplayer, whether all players are connected or not
+            num_players (int):  number of players in the game
         """
-            Creates a list of all vehicles spawned, including the player(s).
-            Creates variable(s) that point towards the player(s) to make finding them easier
-        """
+
         self.vehicles = vehicles
         self.player = player
         self.player2 = player2
@@ -36,54 +49,50 @@ class GameModel:
                     self.vehicles[i] = Enemy.from_json(json.dumps(vehicles[i]))
                 elif i < 2:
                     self.vehicles[i] = Player.from_json(json.dumps(vehicles[i]))
-
             self.player = Player.from_json(json.dumps(player))
             self.player2 = Player.from_json(json.dumps(player2))
-            # print(self)
-            # print(self.player)
-            print(self.vehicles)
-            print(type(self.player))
-            print(self.player.movement_pattern)
-            print()
 
+    """ METHODS """
+    def update(self, local_player_inputs=None, online_player_input=None, player_index=None):
+        """
 
-    # def to_json(self):
-    #     return json.dumps(self, default=lambda o: o.__dict__,
-    #         sort_keys=True, indent=4)
+        Args:
+            all_player_inputs (list):
+            player_index ():
 
-    """ methods """
-    def update(self, all_player_inputs, player_index=None):
-        # spawn_chance(self.vehicles)
-        try:
-            if player_index is None:
-                self.player.input_direction = all_player_inputs[0]
-                if self.player2 is not None:
-                    self.player2.input_direction = all_player_inputs[1]
-            else:
-                if player_index == 0:
-                    self.player.input_direction = all_player_inputs
-                if player_index == 1:
-                    self.player2.input_direction = all_player_inputs
+        Returns:
 
-            """ updates location of all vehicles """
-            for i, item in enumerate(self.vehicles):
-                self.vehicles[i].update_location(self.vehicles)
+        """
 
-            """ checks for which vehicle to despawn next """
-            for i, item in enumerate(self.vehicles):
-                if isinstance(self.vehicles[i], Enemy):
-                    self.vehicles[i].check_to_despawn(self.vehicles)
+        spawn_chance(self.vehicles)     # chance to spawn random enemies
 
-            if self.player.is_below_screen():
-                self.player.health -= 10
-            if self.player2 is not None and self.player2.is_below_screen():
-                self.player2.health -= 10
+        if player_index is None:    # when None, it is a local game
+            self.player.input_direction = local_player_inputs[0]
+            if self.player2 is not None:
+                self.player2.input_direction = local_player_inputs[1]
+        else:
+            if player_index == 0:
+                self.player.input_direction = online_player_input
+            if player_index == 1:
+                self.player2.input_direction = online_player_input
 
-            self.player.score += 1
-        except Exception as err:
-            print("IN GAME MODEL:", err)
+        """ updates location of all vehicles """
+        for i, item in enumerate(self.vehicles):
+            self.vehicles[i].update_location(self.vehicles)
+
+        """ checks for which vehicle to despawn next """
+        for i, item in enumerate(self.vehicles):
+            if isinstance(self.vehicles[i], Enemy):
+                self.vehicles[i].check_to_despawn(self.vehicles)
+
+        if self.player.is_below_screen():   # if player is too far below the window, they will lose health
+            self.player.health -= 10
+        if self.player2 is not None and self.player2.is_below_screen():
+            self.player2.health -= 10
+
+        self.player.score += 1  # player gains points for every frame they are alive
 
     @staticmethod
-    def from_json(json_string):
+    def from_json(json_string):     # converts object from JSON file to GameModel Object
         json_dict = json.loads(json_string)
         return GameModel(**json_dict)

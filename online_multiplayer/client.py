@@ -38,15 +38,10 @@ class Client:
         elif isinstance(player_inputs, GameModel):
             self.client.sendall(json.dumps(get_json(player_inputs)))
         try:
-            json_string = self.client.recv(2048*10).decode()
-            # print(type(json_string))
+            json_string = self.client.recv(2048*50).decode()
             # print(json_string)
             obj = GameModel.from_json(json_string)
-            # print(obj.vehicles[0].movement_pattern)
-
             # print(type(obj))
-            # js = json.loads(string)
-            # print(js)
             return obj
         except Exception as err:
             print("ERROR IN receiving:", err)

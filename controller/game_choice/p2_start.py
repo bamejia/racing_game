@@ -3,7 +3,7 @@ import pygame
 from model.pause_menu import pause
 from view.game_view import GameView
 from model.game_model import GameModel, check_if_player_is_alive
-from controller.player_input import player_input, player_input2
+from controller.player_key_input import player_input, player_input2
 from controller.enemy_input import enemy_input
 from model.vehicle_handling.spawn_enemies import spawn_chance
 from global_variables import MOVEMENT_PATTERNS

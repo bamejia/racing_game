@@ -19,8 +19,8 @@ def spawn_chance(vehicles, movement_pattern="random", x=None, y=None, w=gv.ENEMY
             vehicles.append(vehicle)
     else:
         if random.randint(1, spawn_rate) == 1:
-            x_placement = int(round(random.randint(gv.WINDOW_W * (1 - gv.ROAD_W_RATIO) / 2 + w,
-                                                   gv.WINDOW_W * (1 - gv.ROAD_W_RATIO) / 2 + gv.ROAD_W) - w))
+            x_placement = random.randint(round(gv.WINDOW_W * (1 - gv.ROAD_W_RATIO) / 2 + w),
+                                         round(gv.WINDOW_W * (1 - gv.ROAD_W_RATIO) / 2 + gv.ROAD_W - w))
             vehicle = spawn_random_enemy(index, movement_pattern, x_placement, y, w, l)
             if check_for_other_vehicle(vehicle, vehicles):
                 return

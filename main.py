@@ -2,15 +2,14 @@ from controller.controller import Controller
 
 """ temp """
 from model.direction import Dir
-
+# from controller.player_text_input import player_text_input
 
 
 def main():
     controller = Controller()
     controller.run()
 
-    # player_inputs = Dir["NONE"]
-    # print(type(player_inputs.name))
-    # print(isinstance(player_inputs, Dir))
+    # print(player_text_input("ENTER NAME"))
+
 
 main()

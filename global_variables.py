@@ -8,8 +8,10 @@ WINDOW_X_POS = 300
 WINDOW_Y_POS = 100
 WINDOW_W_RATIO = 5/8
 WINDOW_L_RATIO = 4/5
-WINDOW_W, WINDOW_L = WINDOW_SIZE = round(GetSystemMetrics(0) * WINDOW_W_RATIO),\
-                                                          round(GetSystemMetrics(1) * WINDOW_L_RATIO)
+# WINDOW_W, WINDOW_L = WINDOW_SIZE = round(GetSystemMetrics(0) * WINDOW_W_RATIO),\
+#                                                           round(GetSystemMetrics(1) * WINDOW_L_RATIO)
+
+WINDOW_W, WINDOW_L = WINDOW_SIZE = 1024, 768
 
 # title screen variables
 TITLE_TEXT = "RACING GAME"
@@ -19,12 +21,12 @@ AUTHOR_TEXT = "by bamxmejia"
 AUTHOR_TEXT_SIZE = 80
 AUTHOR_FONT = None
 BUTTON_TEXTS = (
-    "1 PLAYER START",
-    "2 PLAYER START",
-    "OPTIONS",
-    "EXIT"
+    "Single Player",
+    "2 Player",
+    "Options",
+    "Exit"
 )
-BUTTON_TEXT_SIZE = 80
+BUTTON_TEXT_SIZE = 75
 BUTTON_FONT = None
 
 # road variables
@@ -57,7 +59,7 @@ DARK_GREEN = (0, 100, 40)
 TAN = (255, 195, 155)
 
 # traffic variables
-TRAFFIC_SPEED = 0  # 3 or 2
+TRAFFIC_SPEED = 3  # 3 or 2
 FRICTION = 1
 REACTION_FRICTION = 1
 FRICTION_MARKER = 12
@@ -82,7 +84,7 @@ ENEMY_MAX_HANDLING = 2
 ENEMY_STARTING_HEALTH = PLAYER_STARTING_HEALTH
 
 # for testing
-BOTTOM_BORDER = True
+BOTTOM_BORDER = False
 
 # car types
 MOVEMENT_PATTERNS = (

@@ -35,35 +35,24 @@ def server(ip, port):
         while True:
             try:
                 player_input = json.loads(client_connection.recv(2048*6))
-                # print(player_input)
                 if isinstance(player_input[player_index], str):
                     player_input = Dir[player_input]
                 else:
                     print("player_input is object:", player_input)
 
                 if len(games) > game_id:
-                    # print("game id is:", game_id)
                     game = games[game_id]
                     if not player_input:
                         print("No input data")
                         break
                     else:
                         game[2].acquire()
-                        # game[0].update(player_input, player_index)
-                        # print(game[0])
                         game[1][player_index] = player_input
                         game[2].release()
-                        # game[2].acquire()
-                        js = get_json(game[0])
-                        # print(js)
-                        # print(type(js))
-                        j = json.dumps(js)
+                        game_model_dict = get_json(game[0])
+                        game_model_str = json.dumps(game_model_dict)
                         # j = json.dumps(js, indent=4)
-                        # print(j)
-                        #
-                        # print(type(j.encode()))
-                        client_connection.sendall(j.encode())
-                        # game[2].release()
+                        client_connection.sendall(game_model_str.encode())
                 else:
                     print("No game found")
                     break
@@ -80,7 +69,6 @@ def server(ip, port):
             print("closing game:", err)
         # player_id -= 1
         client_connection.close()
-
 
     player_id = 0
     games = []

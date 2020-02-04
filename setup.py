@@ -22,4 +22,4 @@ setup(name='racing game',
       version='0.3',
       description='racing game',
       options=dict(build_exe=buildOptions),
-      executables=executables)
+      executables=executables, requires=['pygame'])
