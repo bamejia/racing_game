@@ -1,5 +1,6 @@
 import sys
 import pygame
+import controller.player_key_input as cp
 
 is_paused = False
 
@@ -15,11 +16,10 @@ def pause(input_is_paused):
                 pygame.quit()
                 sys.exit()
             keys = pygame.key.get_pressed()
-            # num_of_keys = keys.count(True)
             if not keys[pygame.K_RETURN] and not keys[pygame.K_t]:
                 pause_repeat = True
             if keys[pygame.K_ESCAPE] or keys[pygame.K_BACKSPACE]:
-                escape_repeat[0] = False
+                cp.escape_repeat = False
                 return True
             if (keys[pygame.K_RETURN] or keys[pygame.K_t]) and pause_repeat:
                 is_paused = False

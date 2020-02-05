@@ -1,6 +1,9 @@
 from tkinter import *
 import global_variables as gv
-import pygame_gui.elements
+import pygame
+import sys
+import win32gui
+# import pygame_gui.elements
 
 
 def player_text_input2(display_text):
@@ -15,7 +18,8 @@ def player_text_input2(display_text):
     """
 
     window = Tk()
-    # window.overrideredirect(True)   # rids the window of it's minimizing and closing options
+
+    window.overrideredirect(True)   # rids the window of it's minimizing and closing options
     window.attributes('-topmost', True)
 
     window.grid_rowconfigure(0, weight=1)   # centers the x placement
@@ -35,14 +39,37 @@ def player_text_input2(display_text):
 
     def action(reference_to_user_string):   # assigns the value of the user's input to reference param
         reference_to_user_string[0] = user_input.get()
-        window.destroy()    # closes the window
+        if reference_to_user_string[0] == '':   # if no input, changes reference to kill input window
+            reference_to_user_string[0] = 'kill'
 
     Label(text=display_text, font=30).grid(pady=5)  # Prompts the user what to input
     input_width = round(gv.WINDOW_W/24)
     Entry(textvariable=user_input, width=input_width, justify='center').grid()  # Field where the user enters text
     Button(text="Enter", command=lambda: action(user_string_reference)).grid(pady=5)  # Button that calls action func
 
-    window.mainloop()   # keeps the window open and listening for user input
+    window.update_idletasks()
+    window.update()
+
+    window.attributes('-topmost', False)
+
+    while True:     # keeps the window open and listening for user input
+        win = win32gui.FindWindow(None, "Racing Game")
+        dimensions = win32gui.GetWindowRect(win)
+        window_x = dimensions[0] + round((dimensions[2] - dimensions[0]) / 2) - round(window_width / 2)
+        window_y = dimensions[1] + round((dimensions[3] - dimensions[1]) / 2) - round(window_length / 2)
+        window.geometry("+%d+%d" % (window_x, window_y))
+        window.update_idletasks()
+        window.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        if user_string_reference != ['']:
+            break
+
+        window.lift()
+
+    window.destroy()    # destroys tkinter root window
     return user_string_reference[0]    # returns the value referenced
 
 

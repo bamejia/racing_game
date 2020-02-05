@@ -1,1 +1,2 @@
-python main.py
+START /MIN "your title" python main.py
+CONSOLESTATE /Hide

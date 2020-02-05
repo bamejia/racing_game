@@ -1,6 +1,5 @@
 from model.vehicle_handling.vehicle import Player, Enemy, Vehicle
 from model.vehicle_handling.spawn_enemies import spawn_chance
-import sys
 import json
 
 
@@ -32,13 +31,13 @@ class GameModel:
         self.vehicles = vehicles
         self.player = player
         self.player2 = player2
-        self.ready = ready
+        self.ready = ready  # For online play, if both players are ready to start
         self.num_players = num_players
         if vehicles is None:
             if num_players == 2:
                 self.vehicles = [Player(0), Player(1, "player2", x=600)]
                 self.player2 = self.vehicles[1]
-                self.ready = ready  # For online play, if both players are ready to start
+                self.ready = ready
             else:
                 self.vehicles = [Player(0)]
                 self.player2 = player2

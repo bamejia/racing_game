@@ -1,6 +1,4 @@
 import socket
-import sys
-import pygame
 from model.game_model import GameModel
 from model.objct_to_dict_recursion import get_json
 from _thread import *
@@ -21,76 +19,80 @@ def server(ip, port):
     try:
         # s.bind((host_ip, port))
         s.bind((ip, port))
-    except socket.error as e:
-        print(e)
-        sys.exit()
+    except socket.error as err:
+        print("ERROR starting server:", err)
+        return
 
     port = s.getsockname()[0]
 
     """ sets the socket to start listening for incoming connections """
     s.listen(2)
 
-    def client_connection_thread(client_connection, player_index, game_id, has_ended):
+    def client_connection_thread(client_connection, player_index, game_id, has_ended_ref):
         client_connection.send(str(player_index).encode())  # sends to client if they are player 1 or 2
         while True:
             try:
-                player_input = json.loads(client_connection.recv(2048*6))
-                if isinstance(player_input[player_index], str):
-                    player_input = Dir[player_input]
+                player_input = json.loads(client_connection.recv(1024*1))
+                if not player_input:
+                    games[game_id][2].acquire()
+                    has_ended_ref[0] = True
+                    games[game_id][2].release()
                 else:
-                    print("player_input is object:", player_input)
+                    player_input = Dir[player_input]
 
-                if len(games) > game_id:
+                if game_id in games:
                     game = games[game_id]
-                    if not player_input:
-                        print("No input data")
+                    game[2].acquire()
+                    game[1][player_index] = player_input
+                    game[2].release()
+                    game_model_dict = get_json(game[0])
+                    game_model_str = json.dumps(game_model_dict)
+                    # game_model_str = json.dumps(game_model_dict, indent=4)
+                    if has_ended_ref[0]:
+                        client_connection.sendall("none".encode())
                         break
-                    else:
-                        game[2].acquire()
-                        game[1][player_index] = player_input
-                        game[2].release()
-                        game_model_dict = get_json(game[0])
-                        game_model_str = json.dumps(game_model_dict)
-                        # j = json.dumps(js, indent=4)
-                        client_connection.sendall(game_model_str.encode())
+                    client_connection.sendall(game_model_str.encode())
                 else:
                     print("No game found")
+                    client_connection.sendall("none".encode())
                     break
             except Exception as err:
                 print("ERROR in client thread:", err)
-                return
-        has_ended[0] = True
+                break
+        has_ended_ref[0] = True
         print("Connection Lost")
         try:
             del games[game_id]
-            print(games)
-            print("Game has closed")
+            print("Closing game:", game_id)
         except Exception as err:
-            print("closing game:", err)
-        # player_id -= 1
+            print(f'Game closed [{err}]')
         client_connection.close()
 
     player_id = 0
-    games = []
-    has_ended = [False]
+    games = {}
     while True:
         client_connection, client_ip = s.accept()
         print("Connected to:", client_ip)
-        print(client_connection)
+        # print(client_connection)
 
         if player_id < 2:
             game_id = player_id // 2
             player_index = player_id % 2
             if player_id % 2 == 0:
-                lock = Lock()
+                has_ended_ref = [False]
                 game_model = GameModel(ready=False, num_players=2)
-                games.append((game_model, [Dir.NONE, Dir.NONE], lock, has_ended))
+                games[game_id] = (game_model, [Dir.NONE, Dir.NONE], Lock(), has_ended_ref)
                 print("Creating game, waiting for player 2")
                 start_new_thread(game_thread, (games[game_id],))
             else:
-                games[game_id][0].ready = True
+                try:
+                    games[game_id][0].ready = True
+                except:
+                    player_id += 1
+                    player_index = player_id % 2
+                    games[game_id] = (GameModel(ready=False, num_players=2), [Dir.NONE, Dir.NONE], Lock(), [False])
                 print("Game Start!")
-            start_new_thread(client_connection_thread, (client_connection, player_index, game_id, has_ended))
+            start_new_thread(client_connection_thread, (client_connection, player_index, game_id, games[game_id][3]))
 
         else:
             print("Game is full and/or in session")

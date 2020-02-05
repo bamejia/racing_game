@@ -1,7 +1,7 @@
 import pygame
-import pygame_gui
+# import pygame_gui
 import global_variables as gv
-from view.button import Button
+from view.gui import Button, Label
 
 btn_x_left_ratio = 1 / 50
 btn_x_right_ratio = 52 / 50
@@ -15,16 +15,16 @@ class TitleScreenView:
 
         self.display = window.display
         self.surface = window.surface
-        self.gui_manager = window.gui_manager
+        # self.gui_manager = window.gui_manager
 
         """ Making buttons """
         title_y_placement = round(gv.WINDOW_L * 6 / 30)
-        self.title_btn = Button(gv.TITLE_FONT, gv.TITLE_TEXT, gv.TITLE_TEXT_SIZE, True, 0, title_y_placement,
-                                gv.RED, False)  # Labeled as buttons, but are purely for placing on screen
+        self.title_lb = Label(gv.TITLE_FONT, gv.TITLE_TEXT, gv.TITLE_TEXT_SIZE, True, 0, title_y_placement,
+                                gv.RED)  # Labeled as buttons, but are purely for placing on screen
 
         author_y_placement = round(gv.WINDOW_L * 10 / 30)
-        self.author_btn = Button(gv.BUTTON_FONT, gv.AUTHOR_TEXT, gv.BUTTON_TEXT_SIZE, True, 0, author_y_placement,
-                                 gv.DARK_RED, False)
+        self.author_lb = Label(gv.BUTTON_FONT, gv.AUTHOR_TEXT, gv.BUTTON_TEXT_SIZE, True, 0, author_y_placement,
+                                 gv.DARK_RED)
 
         p1_btn_y_placement = round(gv.WINDOW_L * 15 / 30)
         self.p1_btn = Button(gv.BUTTON_FONT, gv.BUTTON_TEXTS[0], gv.BUTTON_TEXT_SIZE, True, 0, p1_btn_y_placement)
@@ -55,8 +55,6 @@ class TitleScreenView:
         # y_placement = round(gv.WINDOW_L * 28 / 30)
         # self.new_btn = Button(gv.BUTTON_FONT, gv.BUTTON_TEXTS[0], gv.BUTTON_TEXT_SIZE, True, 0, y_placement)
 
-
-
     """ METHODS """
     def show_screen(self, btn_hover, btn_press):
         self.surface.fill(gv.TANISH_YELLOW)
@@ -66,12 +64,8 @@ class TitleScreenView:
             if btn_press:
                 self.cur_btn_colors[btn_hover] = gv.YELLOW
 
-        self.title_btn.draw(self.surface)
-        self.author_btn.draw(self.surface)
+        self.title_lb.draw(self.surface)
+        self.author_lb.draw(self.surface)
         [self.all_buttons[btn].draw(self.surface, self.cur_btn_colors[btn]) for btn in self.all_buttons]
-        # self.p1_btn.draw(self.surface, self.cur_btn_colors[gv.BUTTON_TEXTS[0]])
-        # self.p2_btn.draw(self.surface, self.cur_btn_colors[gv.BUTTON_TEXTS[1]])
-        # self.options_btn.draw(self.surface, self.cur_btn_colors[gv.BUTTON_TEXTS[2]])
-        # self.exit_btn.draw(self.surface, self.cur_btn_colors[gv.BUTTON_TEXTS[3]])
 
         self.display.update()

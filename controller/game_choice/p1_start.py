@@ -11,7 +11,7 @@ import time
 
 def p1_start(window):
     game_view = GameView(window)
-    game_model = GameModel(ready=True)
+    game_model = GameModel()
 
     all_player_inputs = [None, None]
     while True:

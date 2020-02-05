@@ -1,6 +1,7 @@
-from global_variables import WINDOW_L
+from global_variables import WINDOW_L, PLAYER_LENGTH
+import model.vehicle_handling.spawn_enemies as spawn
 
-off_screen_distance = 100
+off_screen_distance = PLAYER_LENGTH
 
 
 def check_if_below_screen(vehicle):
@@ -12,6 +13,8 @@ def check_if_below_screen(vehicle):
 def despawn(vehicle, vehicles):
     """ removes input vehicle from input list of vehicles, essentially, despawning them """
     index = vehicles.index(vehicle)
+    if vehicles[index].movement_pattern == "tracker":
+        spawn.tracker_cars -= 1
     del vehicles[index]
     while index < len(vehicles):
         vehicles[index].index = index

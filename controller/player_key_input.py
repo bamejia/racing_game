@@ -33,6 +33,7 @@ def player_input(events):
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
     if not keys[pygame.K_RETURN] and not keys[pygame.K_t]:
         pause_repeat = True
     if (keys[pygame.K_ESCAPE] or keys[pygame.K_BACKSPACE]) and escape_repeat:
@@ -63,46 +64,44 @@ def player_input(events):
     return player_input_dir
 
 
-def player_input2(player, events):
+def player_input2(events):
     global pause_repeat
     global escape_repeat
+
+    player_input_dir = Dir.NONE
+    keys = pygame.key.get_pressed()
+
     for event in events:
-        keys = pygame.key.get_pressed()
-        # num_of_keys = keys.count(True)
-
-        if not keys[pygame.K_RETURN] and not keys[pygame.K_t]:
-            pause_repeat = True
-
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if (keys[pygame.K_ESCAPE] or keys[pygame.K_BACKSPACE]) and escape_repeat:
-            escape_repeat = False
-            return False
-        if keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
-            player.input_direction = Dir.NORTH
-        elif keys[pygame.K_UP] and keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
-            player.input_direction = Dir.NORTHEAST
-        elif not keys[pygame.K_UP] and keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
-            player.input_direction = Dir.EAST
-        elif not keys[pygame.K_UP] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
-            player.input_direction = Dir.SOUTHEAST
-        elif not keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
-            player.input_direction = Dir.SOUTH
-        elif not keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
-            player.input_direction = Dir.SOUTHWEST
-        elif not keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
-            player.input_direction = Dir.WEST
-        elif keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
-            player.input_direction = Dir.NORTHWEST
-        else:
-            player.input_direction = Dir.NONE
 
-        if (keys[pygame.K_RETURN] or keys[pygame.K_t]) and pause_repeat:
-            pause_repeat = False
-            escape_repeat_ref = [escape_repeat]
-            pause(True, escape_repeat_ref)
-            if not escape_repeat:
-                return False
+    if not keys[pygame.K_RETURN] and not keys[pygame.K_t]:
+        pause_repeat = True
+    if (keys[pygame.K_ESCAPE] or keys[pygame.K_BACKSPACE]) and escape_repeat:
+        escape_repeat = False
+        return False
+    if keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
+        player_input_dir = Dir.NORTH
+    elif keys[pygame.K_UP] and keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
+        player_input_dir = Dir.NORTHEAST
+    elif not keys[pygame.K_UP] and keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
+        player_input_dir = Dir.EAST
+    elif not keys[pygame.K_UP] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
+        player_input_dir = Dir.SOUTHEAST
+    elif not keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and keys[pygame.K_DOWN] and not keys[pygame.K_LEFT]:
+        player_input_dir = Dir.SOUTH
+    elif not keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+        player_input_dir = Dir.SOUTHWEST
+    elif not keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+        player_input_dir = Dir.WEST
+    elif keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+        player_input_dir = Dir.NORTHWEST
+    else:
+        player_input_dir = Dir.NONE
 
-    return True
+    if (keys[pygame.K_RETURN] or keys[pygame.K_t]) and pause_repeat:
+        pause_repeat = False
+        return True
+
+    return player_input_dir

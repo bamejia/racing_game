@@ -13,3 +13,10 @@ def main():
 
 
 main()
+
+# def decor(func):
+#     def new_func():
+#         func
+#         return print("HI")
+#     return new_func()
+

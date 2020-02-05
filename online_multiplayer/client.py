@@ -19,8 +19,9 @@ class Client:
         player index (0:player 1 | 1:player 2)
         if could not connect, returns None
         """
+        # http_request = f'GET / HTTP/1.1\r\nHost:{self.server_addr[0]}\r\n\r\n'
         self.client.connect(self.server_addr)
-        js = json.loads(self.client.recv(2048 * 10))
+        js = json.loads(self.client.recv(2048 * 2))
         return js
 
     """ METHODS """
@@ -35,16 +36,18 @@ class Client:
         if isinstance(player_inputs, Dir):
             player_input = player_inputs.name
             self.client.sendall(json.dumps(player_input).encode())
-        elif isinstance(player_inputs, GameModel):
-            self.client.sendall(json.dumps(get_json(player_inputs)))
+        else:
+            player_input = "false"
+            self.client.sendall(player_input.encode())
         try:
-            json_string = self.client.recv(2048*50).decode()
-            # print(json_string)
+            json_string = self.client.recv(1024*55).decode()  # 1024 * 63
+            if json_string == "none":
+                return None
             obj = GameModel.from_json(json_string)
-            # print(type(obj))
             return obj
         except Exception as err:
             print("ERROR IN receiving:", err)
+            return None
 
     """ GETTERS """
     @property

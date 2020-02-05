@@ -7,6 +7,7 @@ from controller.game_choice.p1_start import p1_start
 from controller.game_choice.p2_start import p2_start
 # from controller.player_text_input import player_text_input
 from controller.game_choice.option_menu import option_menu
+import controller.player_text_input as pti
 import pygame
 import sys
 import global_variables as gv
@@ -23,8 +24,8 @@ class Controller:
             gv.BUTTON_TEXTS[0]: lambda: p1_start(self.window),
             gv.BUTTON_TEXTS[1]: lambda: p2_start(self.window),
             gv.BUTTON_TEXTS[2]: lambda: online_start(self.window, True),
-            # gv.BUTTON_TEXTS[3]: lambda: player_text_input("ENTER NAME")
-            gv.BUTTON_TEXTS[3]: lambda : online_start(self.window)
+            # gv.BUTTON_TEXTS[3]: lambda: pti.player_text_input2("ENTER NAME")
+            gv.BUTTON_TEXTS[3]: lambda: online_start(self.window)
             # "OPTIONS": lambda: option_menu(self.window),
             # "EXIT": lambda: [i for i in (pygame.quit(), sys.exit())]
         }
@@ -42,6 +43,8 @@ class Controller:
 
             self.title_screen_view.show_screen(btn_hover, btn_press)
             title_screen_input(events)
+
+            # print(pygame.display.get_active())
 
             if btn_choice is not None:
                 self.btn_func[btn_choice]()

@@ -27,6 +27,7 @@ def game_thread(game):
                     not check_if_player_is_alive(game_model.player2):
                 time.sleep(2.5)
                 lock.release()
+                has_ended[0] = True
                 break
             lock.release()
         else:

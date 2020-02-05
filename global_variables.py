@@ -1,4 +1,4 @@
-from win32api import GetSystemMetrics
+# from win32api import GetSystemMetrics
 import pygame
 
 
@@ -7,10 +7,12 @@ WINDOW_NAME = "Racing Game"
 WINDOW_X_POS = 300
 WINDOW_Y_POS = 100
 WINDOW_W_RATIO = 5/8
-WINDOW_L_RATIO = 4/5
+WINDOW_L_RATIO = 7/8
 # WINDOW_W, WINDOW_L = WINDOW_SIZE = round(GetSystemMetrics(0) * WINDOW_W_RATIO),\
 #                                                           round(GetSystemMetrics(1) * WINDOW_L_RATIO)
+# print(WINDOW_W, WINDOW_L, WINDOW_SIZE)
 
+WINDOW_W, WINDOW_L = WINDOW_SIZE = 1024, 900
 WINDOW_W, WINDOW_L = WINDOW_SIZE = 1024, 768
 
 # title screen variables
@@ -30,7 +32,7 @@ BUTTON_TEXT_SIZE = 75
 BUTTON_FONT = None
 
 # road variables
-ROAD_W_RATIO = 3/5
+ROAD_W_RATIO = 6/12  #3/5
 ROAD_W, ROAD_L = ROAD_DIMENSIONS = (round(WINDOW_W*ROAD_W_RATIO), round(WINDOW_L))
 ROAD_X_PLACEMENT = (round(WINDOW_W * (1 - ROAD_W_RATIO) / 2))
 
@@ -66,8 +68,9 @@ FRICTION_MARKER = 12
 REACTION_SPEED_MAX = 12
 
 # player defaults
-PLAYER_WIDTH = 32
-PLAYER_LENGTH = 68
+# PLAYER_WIDTH = round(WINDOW_W / 32)
+PLAYER_WIDTH = 25
+PLAYER_LENGTH = 54
 PLAYER_ACCELERATION = 1
 PLAYER_MAX_SPEED = 5
 PLAYER_HANDLING = 1
@@ -82,9 +85,6 @@ ENEMY_MAX_SPEED = 4
 ENEMY_HANDLING = 1
 ENEMY_MAX_HANDLING = 2
 ENEMY_STARTING_HEALTH = PLAYER_STARTING_HEALTH
-
-# for testing
-BOTTOM_BORDER = False
 
 # car types
 MOVEMENT_PATTERNS = (
@@ -106,3 +106,5 @@ POWER_UPS = (
     "speed"
 )
 
+# for testing
+BOTTOM_BORDER = False

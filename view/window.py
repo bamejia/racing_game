@@ -1,5 +1,5 @@
 import pygame
-from pygame_gui.ui_manager import UIManager
+# from pygame_gui.ui_manager import UIManager
 import os
 import global_variables as gv
 
@@ -19,8 +19,8 @@ class Window:
         icon_surface = pygame.transform.scale(icon_surface, (40, 40))
         self.display.set_icon(icon_surface)
 
-        self.surface = pygame.display.set_mode(gv.WINDOW_SIZE)
+        self.surface = pygame.display.set_mode(gv.WINDOW_SIZE)  #, flags=pygame.NOFRAME)
 
-        self.gui_manager = UIManager(gv.WINDOW_SIZE)
+        # self.gui_manager = UIManager(gv.WINDOW_SIZE)
 
         self.clock = pygame.time.Clock()
