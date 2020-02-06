@@ -2,7 +2,7 @@ import socket
 import json
 from model.direction import Dir
 from model.game_model import GameModel
-from model.objct_to_dict_recursion import get_json
+import model.vehicle_handling.vehicle as v
 
 
 class Client:
@@ -40,11 +40,35 @@ class Client:
             player_input = "false"
             self.client.sendall(player_input.encode())
         try:
-            json_string = self.client.recv(1024*55).decode()  # 1024 * 63
-            if json_string == "none":
+            # json_string = self.client.recv(1024*20).decode()  # 1024 * 63
+            # if json_string == "none":
+            #     return None
+            input_string = self.client.recv(1024*40)
+            # if input_string == "ready":
+            #     print("READY:", input_string)
+            #     return True
+            if input_string == 'none':
                 return None
-            obj = GameModel.from_json(json_string)
-            return obj
+            input_vehicles = json.loads(input_string)
+
+            new_vehicles = []
+            i = 0
+            if len(input_vehicles) % 4 != 0:
+                print("MISSING DATA")
+                return None
+            while i < len(input_vehicles):
+                if 'player' in input_vehicles[i]:
+                    new_vehicles.append(v.Player(i / 4, input_vehicles[i], input_vehicles[i+1], input_vehicles[i+2],
+                                                 _health=input_vehicles[i+3]))
+                else:
+                    new_vehicles.append(v.Enemy(i / 4, input_vehicles[i], input_vehicles[i + 1], input_vehicles[i + 2],
+                                        _health=input_vehicles[i + 3]))
+                i += 4
+            # print(new_vehicles)
+            return new_vehicles
+
+            # obj = GameModel.from_json(json_string)
+            # return obj
         except Exception as err:
             print("ERROR IN receiving:", err)
             return None

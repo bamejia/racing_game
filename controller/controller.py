@@ -25,9 +25,9 @@ class Controller:
             gv.BUTTON_TEXTS[1]: lambda: p2_start(self.window),
             gv.BUTTON_TEXTS[2]: lambda: online_start(self.window, True),
             # gv.BUTTON_TEXTS[3]: lambda: pti.player_text_input2("ENTER NAME")
-            gv.BUTTON_TEXTS[3]: lambda: online_start(self.window)
+            gv.BUTTON_TEXTS[2]: lambda: online_start(self.window),
             # "OPTIONS": lambda: option_menu(self.window),
-            # "EXIT": lambda: [i for i in (pygame.quit(), sys.exit())]
+            gv.BUTTON_TEXTS[3]: lambda: [i for i in (pygame.quit(), sys.exit())]
         }
 
     def run(self):

@@ -144,7 +144,7 @@ class Vehicle:
 
 
 class Player(Vehicle):
-    def __init__(self, index, movement_pattern ="player", x=400, y=400, w=gv.PLAYER_WIDTH, l=gv.PLAYER_LENGTH,
+    def __init__(self, index, movement_pattern ="player", x=400, y=400, w=None, l=None,
                  acceleration=gv.PLAYER_ACCELERATION, max_speed=gv.PLAYER_MAX_SPEED, handling=gv.PLAYER_HANDLING,
                  max_handling=gv.PLAYER_MAX_HANDLING, _health=gv.PLAYER_STARTING_HEALTH,
                  input_x_vel=0, input_y_vel=0, input_direction=Dir.NONE,
@@ -152,6 +152,10 @@ class Player(Vehicle):
                  cur_x_vel=0, cur_y_vel=0, cur_direction=Dir.NONE,
                  friction_marker=gv.FRICTION_MARKER,
                  friction_count=0, acceleration_count=0, handling_count=0, score=0):
+        if w is None:
+            w = gv.CAR_SIZES[movement_pattern][0]
+        if l is None:
+            l = gv.CAR_SIZES[movement_pattern][1]
         super().__init__(index, movement_pattern, x, y, w, l, acceleration, max_speed, handling, max_handling, _health,
                          input_x_vel, input_y_vel, input_direction,
                          reaction_x_vel, reaction_y_vel,
@@ -172,7 +176,7 @@ class Player(Vehicle):
 
 
 class Enemy(Vehicle):
-    def __init__(self, index, movement_pattern="random", x=None, y=None, w=gv.ENEMY_WIDTH, l=gv.ENEMY_LENGTH,
+    def __init__(self, index, movement_pattern="random", x=None, y=None, w=None, l=None,
                  acceleration=gv.ENEMY_ACCELERATION, max_speed=gv.ENEMY_MAX_SPEED, handling=gv.ENEMY_HANDLING,
                  max_handling=gv.ENEMY_MAX_HANDLING, _health=gv.ENEMY_STARTING_HEALTH, input_x_vel=0, input_y_vel=0,
                  input_direction=Dir.NONE,
@@ -180,6 +184,11 @@ class Enemy(Vehicle):
                  cur_x_vel=0, cur_y_vel=0, cur_direction=Dir.NONE,
                  friction_marker=gv.FRICTION_MARKER,
                  friction_count=0, acceleration_count=0, handling_count=0, score=0):
+
+        if w is None:
+            w = gv.CAR_SIZES[movement_pattern][0]
+        if l is None:
+            l = gv.CAR_SIZES[movement_pattern][1]
         if x is not None and y is None:
             super().__init__(index, movement_pattern, x, -l-1, w, l, acceleration, max_speed, handling, max_handling,
                              _health, input_x_vel, input_y_vel, input_direction,

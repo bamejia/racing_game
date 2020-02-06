@@ -14,7 +14,7 @@ from model.direction import Dir
 
 def online_start(window, create_server=False):
     game_view = GameView(window)
-    game_model = None
+    game_model = GameModel(num_players=2, ready=True)
 
     if create_server:
         hostname = socket.gethostname()
@@ -56,8 +56,9 @@ def online_start(window, create_server=False):
                 # if len(game_model.vehicles) > 1 and game_model.player2.movement_pattern == MOVEMENT_PATTERNS[1]:
                 #     player_input2(game_model.vehicles[1], events)
 
-                game_model = client.communicate(all_player_inputs[client.player_index])
-                if game_model is None:
+                game_model.vehicles = client.communicate(all_player_inputs[client.player_index])
+                print(game_model.vehicles)
+                if game_model.vehicles is None:
                     break
                 # enemy_input(game_model.vehicles)
                 game_view.update(game_model.vehicles)
@@ -67,8 +68,10 @@ def online_start(window, create_server=False):
                 #     time.sleep(2.5)
                 #     break
             else:
-                game_model = client.communicate(all_player_inputs[client.player_index])
-                if game_model is None:
+                game_model.vehicles = client.communicate(all_player_inputs[client.player_index])
+                if game_model.vehicles is True:
+                    game_model.ready = True
+                elif game_model.vehicles is None:
                     break
 
         except Exception as err:
