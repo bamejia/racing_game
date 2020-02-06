@@ -2,6 +2,7 @@ import socket
 import json
 from model.direction import Dir
 from model.game_model import GameModel
+from global_variables import CAR_TYPES
 import model.vehicle_handling.vehicle as v
 
 
@@ -21,8 +22,8 @@ class Client:
         """
         # http_request = f'GET / HTTP/1.1\r\nHost:{self.server_addr[0]}\r\n\r\n'
         self.client.connect(self.server_addr)
-        js = json.loads(self.client.recv(2048 * 2))
-        return js
+        player_number = json.loads(self.client.recv(1024 * 1))
+        return player_number
 
     """ METHODS """
     def communicate(self, player_inputs):
@@ -35,6 +36,7 @@ class Client:
         """
         if isinstance(player_inputs, Dir):
             player_input = player_inputs.name
+            # print("CLIENT SENDNIG:", self.client.send(json.dumps(player_input).encode()))
             self.client.sendall(json.dumps(player_input).encode())
         else:
             player_input = "false"
@@ -43,7 +45,7 @@ class Client:
             # json_string = self.client.recv(1024*20).decode()  # 1024 * 63
             # if json_string == "none":
             #     return None
-            input_string = self.client.recv(1024*40)
+            input_string = self.client.recv(380)
             # if input_string == "ready":
             #     print("READY:", input_string)
             #     return True
@@ -56,12 +58,15 @@ class Client:
             if len(input_vehicles) % 4 != 0:
                 print("MISSING DATA")
                 return None
+            # print(input_vehicles)
             while i < len(input_vehicles):
-                if 'player' in input_vehicles[i]:
-                    new_vehicles.append(v.Player(i / 4, input_vehicles[i], input_vehicles[i+1], input_vehicles[i+2],
+                car_type = CAR_TYPES[input_vehicles[i]]
+                # print(car_type)
+                if 'player' in car_type:
+                    new_vehicles.append(v.Player(i / 4, car_type, input_vehicles[i+1], input_vehicles[i+2],
                                                  _health=input_vehicles[i+3]))
                 else:
-                    new_vehicles.append(v.Enemy(i / 4, input_vehicles[i], input_vehicles[i + 1], input_vehicles[i + 2],
+                    new_vehicles.append(v.Enemy(i / 4, car_type, input_vehicles[i + 1], input_vehicles[i + 2],
                                         _health=input_vehicles[i + 3]))
                 i += 4
             # print(new_vehicles)

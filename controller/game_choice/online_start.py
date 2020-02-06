@@ -57,7 +57,7 @@ def online_start(window, create_server=False):
                 #     player_input2(game_model.vehicles[1], events)
 
                 game_model.vehicles = client.communicate(all_player_inputs[client.player_index])
-                print(game_model.vehicles)
+                # print(game_model.vehicles)
                 if game_model.vehicles is None:
                     break
                 # enemy_input(game_model.vehicles)
