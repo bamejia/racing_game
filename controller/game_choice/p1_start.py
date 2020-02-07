@@ -5,7 +5,6 @@ from view.game_view import GameView
 from model.game_model import GameModel, check_if_player_is_alive
 from controller.player_key_input import player_input
 from controller.enemy_input import enemy_input
-from model.vehicle_handling.spawn_enemies import spawn_chance
 import time
 
 
