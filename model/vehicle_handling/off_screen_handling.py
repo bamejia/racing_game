@@ -13,7 +13,7 @@ def check_if_below_screen(vehicle):
 def despawn(vehicle, vehicles):
     """ removes input vehicle from input list of vehicles, essentially, despawning them """
     index = vehicles.index(vehicle)
-    if vehicles[index].movement_pattern == "tracker":
+    if vehicles[index].car_type == "tracker":
         spawn.tracker_cars -= 1
     del vehicles[index]
     while index < len(vehicles):

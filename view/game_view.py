@@ -12,7 +12,6 @@ class GameView:
     def __init__(self, window, visible_score=False, visible_top_health_bar=False):
 
         self.display = window.display
-        # self.display.set_caption(gv.WINDOW_NAME)
 
         self.surface = window.surface
         # surface = pygame.display.set_mode(WINDOW_SIZE, pygame.DOUBLEBUF|pygame.OPENGL)
@@ -42,7 +41,7 @@ class GameView:
         display_race(self, vehicles)
 
         if self.visible_top_health_bar:     # Whether to show health bars or not
-            if len(vehicles) > 1 and vehicles[1].movement_pattern == "player2":
+            if len(vehicles) > 1 and vehicles[1].car_type == "player2":
                 display_health(self.surface, vehicles[1])
             display_health(self.surface, vehicles[0])
 

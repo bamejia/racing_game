@@ -5,9 +5,10 @@ from view.game_view import GameView
 from model.game_model import GameModel, check_if_player_is_alive
 from controller.player_key_input import player_input, player_input2
 from controller.enemy_input import enemy_input
-from model.vehicle_handling.spawn_enemies import spawn_chance
-from global_variables import CAR_TYPES
 import time
+
+
+""" WILL PROBABLY JUST BE MERGED WITH p1_start IN THE FUTURE """
 
 
 def p2_start(window):
@@ -21,7 +22,6 @@ def p2_start(window):
         all_player_inputs[0] = player_input(events)
         if game_model.player2 is not None:
             all_player_inputs[1] = player_input2(events)
-        # print(self.game_model.player.cur_x_vel, self.game_model.player.reaction_x_vel, self.game_model.player.cur_y_vel, self.game_model.player.reaction_y_vel)
 
         if True in all_player_inputs:
             will_escape = pause(True)

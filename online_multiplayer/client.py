@@ -1,7 +1,6 @@
 import socket
 import json
 from model.direction import Dir
-from model.game_model import GameModel
 from global_variables import CAR_TYPES
 import model.vehicle_handling.vehicle as v
 

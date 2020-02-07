@@ -10,23 +10,31 @@ import time
 
 
 def p1_start(window):
+    """  After Single Player is chosen at the title screen (potentially Local 2 Player as well), will call this function
+         and create instances of GameView and GameModel to start up a game
+
+    Args:
+        window (class Window): contains python.display, python.surface, and python.time.Clock
+
+    Returns:
+        None
+    """
     game_view = GameView(window, True, True)
     game_model = GameModel()
 
-    all_player_inputs = [None, None]
+    all_player_inputs = [None, None]    # Keeps track of each player's inputs
     while True:
         events = pygame.event.get()
 
         all_player_inputs[0] = player_input(events)
         # if game_model.player2 is not None:
         #     all_player_inputs[1] = player_input2(game_model.vehicles[1], events)
-        # print(self.game_model.player.cur_x_vel, self.game_model.player.reaction_x_vel, self.game_model.player.cur_y_vel, self.game_model.player.reaction_y_vel)
 
-        if True in all_player_inputs:
+        if True in all_player_inputs:   # If 'enter' or 't' is pressed, will pause the game
             will_escape = pause(True)
-            if will_escape:
+            if will_escape:  # If escape is pressed while paused, will break while loop and return to title screen
                 break
-        elif False in all_player_inputs:
+        elif False in all_player_inputs:    # If escape is pressed, will break while loop and return to title screen
             break
         else:
             enemy_input(game_model.vehicles)
@@ -34,10 +42,11 @@ def p1_start(window):
             game_model.update(all_player_inputs)
             game_view.update(game_model.vehicles)
 
-            if not check_if_player_is_alive(game_model.player):
+            if not check_if_player_is_alive(game_model.player):     # Breaks while loop if player 1 is dead
                 time.sleep(2.5)
                 break
             if game_model.player2 is not None and not check_if_player_is_alive(game_model.player2):
+                                                                    # Breaks while loop if player 2 is dead
                 time.sleep(2.5)
                 break
 

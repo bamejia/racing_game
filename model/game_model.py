@@ -62,21 +62,24 @@ class GameModel:
             None
         """
 
-        a = 0
-        player_count = 0
-        while a < len(self.vehicles) and player_count < self.num_players:
-            if "player2" in self.vehicles[a].movement_pattern:
-                # print("P2")
-                self.player2 = self.vehicles[a]
-                player_count += 1
-            elif "player" in self.vehicles[a].movement_pattern:
-                # print("p!")
-                self.player = self.vehicles[a]
-                player_count += 1
-            else:
-                # print("count")
-                pass
-            a += 1
+        # NOT SURE IF THIS AFFECTS GAMEPLAY OR IF IT'S JUST ME.
+        # CARS FEEL TOO FAST
+        #
+        # a = 0
+        # player_count = 0
+        # while a < len(self.vehicles) and player_count < self.num_players:
+        #     if "player2" in self.vehicles[a].car_type:
+        #         # print("P2")
+        #         self.player2 = self.vehicles[a]
+        #         player_count += 1
+        #     elif "player" in self.vehicles[a].car_type:
+        #         # print("p!")
+        #         self.player = self.vehicles[a]
+        #         player_count += 1
+        #     else:
+        #         # print("count")
+        #         pass
+        #     a += 1
 
         spawn_chance(self.vehicles)     # chance to spawn random enemies
 

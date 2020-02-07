@@ -9,36 +9,36 @@ spawn_max = 17
 tracker_cars = 0
 
 
-def spawn_chance(vehicles, movement_pattern=None, x=None, y=None, w=None, l=None):
+def spawn_chance(vehicles, car_type=None, x=None, y=None, w=None, l=None):
     global tracker_cars
     index = len(vehicles)
     if index >= spawn_max:
         return
-    if movement_pattern is None:
-        movement_pattern = pick_random_movement_pattern()
+    if car_type is None:
+        car_type = pick_random_car_type()
     if x is not None:
         if random.randint(1, spawn_rate) == 1:
-            vehicle = spawn_random_enemy(index, movement_pattern, x, y, w, l)
+            vehicle = spawn_random_enemy(index, car_type, x, y, w, l)
             if check_for_other_vehicle(vehicle, vehicles):  # if spawn area is occupied by another car, will not spawn
                 return
             vehicles.append(vehicle)
     else:
         if random.randint(1, spawn_rate) == 1:
             x_placement = random.randint(round(gv.WINDOW_W * (1 - gv.ROAD_W_RATIO) / 2 +
-                                               gv.CAR_SIZES[movement_pattern][0]),
+                                               gv.CAR_SIZES[car_type][0]),
                                          round(gv.WINDOW_W * (1 - gv.ROAD_W_RATIO) / 2 +
-                                               gv.ROAD_W - gv.CAR_SIZES[movement_pattern][0]))
-            vehicle = spawn_random_enemy(index, movement_pattern, x_placement, y, w, l)
+                                               gv.ROAD_W - gv.CAR_SIZES[car_type][0]))
+            vehicle = spawn_random_enemy(index, car_type, x_placement, y, w, l)
             if check_for_other_vehicle(vehicle, vehicles):
                 return
             vehicles.append(vehicle)
 
 
-def spawn_random_enemy(index, movement_pattern, x, y, w, l):
-    return v.Enemy(index, movement_pattern, x, y, w, l)
+def spawn_random_enemy(index, car_type, x, y, w, l):
+    return v.Enemy(index, car_type, x, y, w, l)
 
 
-def pick_random_movement_pattern():
+def pick_random_car_type():
     global tracker_cars
     if tracker_cars <= 0:
         pattern = "tracker"

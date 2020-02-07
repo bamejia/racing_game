@@ -39,11 +39,12 @@ def display_health(surface, vehicle):
                                          health_on_car_border_y_extender))
     pygame.draw.rect(surface, gv.RED, (vehicle.x - health_on_car_x_shift, vehicle.y + round(vehicle.l * 4 / 5),
                                        health_on_car_width, health_on_car_length))
-    pygame.draw.rect(surface, gv.GREEN, (vehicle.x - health_on_car_x_shift, vehicle.y + round(vehicle.l * 4 / 5),
-                                         round(health_on_car_width * (vehicle.health / gv.PLAYER_STARTING_HEALTH)),
-                                         health_on_car_length))
+    if vehicle.health > 0:
+        pygame.draw.rect(surface, gv.GREEN, (vehicle.x - health_on_car_x_shift, vehicle.y + round(vehicle.l * 4 / 5),
+                                             round(health_on_car_width * (vehicle.health / gv.PLAYER_STARTING_HEALTH)),
+                                             health_on_car_length))
     
-    if vehicle.movement_pattern == "player2":
+    if vehicle.car_type == "player2":
         # health in top right
         pygame.draw.rect(surface, gv.BLACK, (top_right_health_x_placement - top_health_border_x_shift,
                                              top_right_health_y_placement - top_health_border_y_shift,
@@ -52,10 +53,11 @@ def display_health(surface, vehicle):
         pygame.draw.rect(surface, gv.RED, (top_right_health_x_placement,
                                            top_right_health_y_placement,
                                            top_health_width, top_health_length))
-        pygame.draw.rect(surface, gv.GREEN, (top_right_health_x_placement,
-                                             top_right_health_y_placement,
-                                             round(top_health_width * (vehicle.health / gv.PLAYER_STARTING_HEALTH)),
-                                             top_health_length))
+        if vehicle.health > 0:
+            pygame.draw.rect(surface, gv.GREEN, (top_right_health_x_placement,
+                                                 top_right_health_y_placement,
+                                                 round(top_health_width * (vehicle.health / gv.PLAYER_STARTING_HEALTH)),
+                                                 top_health_length))
         return
 
     # health in top left
@@ -66,8 +68,9 @@ def display_health(surface, vehicle):
     pygame.draw.rect(surface, gv.RED, (top_left_health_x_placement,
                                        top_left_health_y_placement,
                                        top_health_width, top_health_length))
-    pygame.draw.rect(surface, gv.GREEN, (top_left_health_x_placement,
-                                         top_left_health_y_placement,
-                                         round(top_health_width * (vehicle.health / gv.PLAYER_STARTING_HEALTH)),
-                                         top_health_length))
+    if vehicle.health > 0:
+        pygame.draw.rect(surface, gv.GREEN, (top_left_health_x_placement,
+                                             top_left_health_y_placement,
+                                             round(top_health_width * (vehicle.health / gv.PLAYER_STARTING_HEALTH)),
+                                             top_health_length))
 
