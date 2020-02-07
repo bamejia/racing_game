@@ -52,17 +52,15 @@ class GameModel:
             self.player2 = Player.from_json(json.dumps(player2))
 
     """ METHODS """
-    def update(self, local_player_inputs=None, online_player_input=None, player_index=None):
-        """
+    def update(self, player_inputs=None):
+        """  Updates the location and state of all the vehicles depending on the inputs by the player(s)
 
         Args:
-            all_player_inputs (list):
-            player_index ():
+            player_inputs (enum Dir): player inputs from a local game
 
         Returns:
-
+            None
         """
-
 
         a = 0
         player_count = 0
@@ -82,15 +80,9 @@ class GameModel:
 
         spawn_chance(self.vehicles)     # chance to spawn random enemies
 
-        if player_index is None:    # when None, it is a local game
-            self.player.input_direction = local_player_inputs[0]
-            if self.player2 is not None:
-                self.player2.input_direction = local_player_inputs[1]
-        else:
-            if player_index == 0:
-                self.player.input_direction = online_player_input
-            if player_index == 1:
-                self.player2.input_direction = online_player_input
+        self.player.input_direction = player_inputs[0]
+        if self.player2 is not None:
+            self.player2.input_direction = player_inputs[1]
 
         """ updates location of all vehicles """
         for i, item in enumerate(self.vehicles):

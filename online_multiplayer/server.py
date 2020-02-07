@@ -8,6 +8,10 @@ import json
 from model.direction import Dir
 
 
+""" THIS FILE IS NOT UP TO DATE AS IT IS FOR LAN USE, CHECK RACING GAME SERVER REPO FOR THE ACTUAL SERVER """
+""" https://github.com/bamejia/racing_game_server """
+
+
 def server(ip, port):
     # hostname = socket.gethostname()
     # host_ip = socket.gethostbyname(hostname)
