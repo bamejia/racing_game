@@ -13,7 +13,7 @@ from model.direction import Dir
 
 
 def online_start(window, create_server=False):
-    game_view = GameView(window)
+    game_view = GameView(window, visible_top_health_bar=True)
     game_model = GameModel(num_players=2, ready=True)
 
     if create_server:
@@ -45,7 +45,7 @@ def online_start(window, create_server=False):
     except Exception as err:
         print("Can't connect to server:{}".format(err))
         return
-
+    view_thread = False
     all_player_inputs = [Dir.NONE, Dir.NONE]
     while True:
 
@@ -61,7 +61,9 @@ def online_start(window, create_server=False):
                 if game_model.vehicles is None:
                     break
                 # enemy_input(game_model.vehicles)
-                game_view.update(game_model.vehicles)
+                if not view_thread:
+                    start_new_thread(game_view.update, (game_model.vehicles,))
+                    # game_view.update(game_model.vehicles)
 
                 # if not check_if_player_is_alive(game_model.player) or\
                 #         not check_if_player_is_alive(game_model.player2):

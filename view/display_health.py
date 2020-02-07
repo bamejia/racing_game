@@ -21,7 +21,7 @@ top_health_border_y_shift = 3
 top_health_border_width = 6
 top_health_border_length = 6
 
-health_on_car_x_shift = round(gv.WINDOW_W/180)
+health_on_car_x_shift = round(gv.WINDOW_W/120)
 health_on_car_x_border_shift = round(gv.WINDOW_W/800)
 health_on_car_y_border_shift = round(gv.WINDOW_L/600)
 health_on_car_width = round(gv.WINDOW_W/24)

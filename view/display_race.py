@@ -34,6 +34,7 @@ def display_race(view, vehicles):
 def draw_white_lines(surface):
     global white_line_y_placement
     global white_line_y_placement_staggered
+
     road_division = round(gv.ROAD_W / (lines_in_a_row+1))
     half_line_width = round(line_width/2)
     i = 1

@@ -9,7 +9,7 @@ import pygame
 
 
 class GameView:
-    def __init__(self, window):
+    def __init__(self, window, visible_score=False, visible_top_health_bar=False):
 
         self.display = window.display
         # self.display.set_caption(gv.WINDOW_NAME)
@@ -17,6 +17,9 @@ class GameView:
         self.surface = window.surface
         # surface = pygame.display.set_mode(WINDOW_SIZE, pygame.DOUBLEBUF|pygame.OPENGL)
         self.street = pygame.Surface(gv.ROAD_DIMENSIONS, pygame.OPENGL)
+
+        self.visible_score = visible_score
+        self.visible_top_health_bar = visible_top_health_bar
         # street.blit(pygame.image.load(""))
         # potato = [pygame.image.load("Images/potato/frame_0_delay-0.1s.png"),
         #           pygame.image.load("Images/potato/frame_1_delay-0.1s.png"),
@@ -82,13 +85,16 @@ class GameView:
 
     """ METHODS """
     def update(self, vehicles):
+
         display_race(self, vehicles)
 
-        if len(vehicles) > 1 and vehicles[1].movement_pattern == "player2":
-            display_health(self.surface, vehicles[1])
-        display_health(self.surface, vehicles[0])
+        if self.visible_top_health_bar:
+            if len(vehicles) > 1 and vehicles[1].movement_pattern == "player2":
+                display_health(self.surface, vehicles[1])
+            display_health(self.surface, vehicles[0])
 
-        display_score(self, vehicles[0])
+        if self.visible_score:
+            display_score(self, vehicles[0])
 
         self.display.update()
 

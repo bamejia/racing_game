@@ -53,12 +53,12 @@ class Client:
                 return None
             input_vehicles = json.loads(input_string)
 
-            new_vehicles = []
-            i = 0
             if len(input_vehicles) % 4 != 0:
                 print("MISSING DATA")
                 return None
-            # print(input_vehicles)
+            # traffic_line_position = input_vehicles[0]
+            new_vehicles = []
+            i = 0
             while i < len(input_vehicles):
                 car_type = CAR_TYPES[input_vehicles[i]]
                 # print(car_type)

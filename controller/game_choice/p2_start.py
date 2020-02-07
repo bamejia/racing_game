@@ -11,7 +11,7 @@ import time
 
 
 def p2_start(window):
-    game_view = GameView(window)
+    game_view = GameView(window, visible_top_health_bar=True)
     game_model = GameModel(num_players=2)
 
     all_player_inputs = [None, None]
