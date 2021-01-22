@@ -41,9 +41,9 @@ def spawn_random_enemy(index, car_type, x, y, w, l):
 def pick_random_car_type():
     global tracker_cars
     if tracker_cars <= 0:
-        pattern = "tracker"
+        pattern = gv.CarType.TRACKER
     else:
-        pattern = gv.CAR_TYPES[random.randint(2, len(gv.CAR_TYPES) - 1)]
+        pattern = gv.CAR_TYPES[random.randint(3, len(gv.CAR_TYPES) - 1)]
     if pattern == "tracker":
         tracker_cars += 1
     return pattern

@@ -1,12 +1,12 @@
 mouse_down = False  # Prevents user from pressing a button multiple times without first releasing the click button
 
 
-def title_screen_mouse_input(title_screen_view, mouse, click):
+def title_screen_mouse_input(all_buttons, mouse, click):
     global mouse_down
 
-    for btn_name in title_screen_view.all_buttons:  # Loops through every button's position and checks if the mouse \
+    for btn_name in all_buttons:  # Loops through every button's position and checks if the mouse \
                                                     # is interacting with it or not
-        btn = title_screen_view.all_buttons[btn_name]
+        btn = all_buttons[btn_name]
         if btn.btn_pos_size[0] < mouse[0] < btn.btn_pos_size[0] + btn.btn_pos_size[2]:
             if btn.btn_pos_size[1] < mouse[1] < btn.btn_pos_size[1] + btn.btn_pos_size[3]:
                 if click[0] == 1:  # and not mouse_down:

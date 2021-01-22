@@ -19,10 +19,10 @@ class Controller:
         self.window = Window()
         self.title_screen_view = None
         self.btn_func = {   # Functions that will run after a respective button is clicked
-            gv.BUTTON_TEXTS[0]: lambda: p1_start(self.window),
-            gv.BUTTON_TEXTS[1]: lambda: p2_start(self.window),
-            gv.BUTTON_TEXTS[2]: lambda: online_start(self.window),
-            gv.BUTTON_TEXTS[3]: lambda: [i for i in (pygame.quit(), sys.exit())]
+            gv.ButtonText.SINGLE_PLAYER.value: lambda: p1_start(self.window),
+            gv.ButtonText.LOCAL_2_Player.value: lambda: p2_start(self.window),
+            gv.ButtonText.ONLINE_MULTIPLAYER.value: lambda: online_start(self.window),
+            gv.ButtonText.EXIT.value: lambda: [i for i in (pygame.quit(), sys.exit())]
         }
 
     def run(self):
@@ -44,7 +44,8 @@ class Controller:
             click = pygame.mouse.get_pressed()
 
             # Checks mouse input by the player
-            btn_hover, btn_press, btn_choice = title_screen_mouse_input(self.title_screen_view, mouse, click)
+            btn_hover, btn_press, btn_choice = \
+                title_screen_mouse_input(self.title_screen_view.all_buttons, mouse, click)
 
             self.title_screen_view.show_screen(btn_hover, btn_press)    # Displays title screen and the mouse's effect
                                                                         # on the buttons

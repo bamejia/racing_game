@@ -8,7 +8,7 @@ import sys
 buildOptions = dict(
     packages=["pygame", "win32api", "sys", "win32gui"],
     include_files=["controller", "model", "view", "global_variables.py", "Images", 'online_multiplayer'],
-    build_exe=".\\build\\v0.3",
+    build_exe=".\\build\\v0.4",
     excludes=[]
 )
 
@@ -19,7 +19,7 @@ executables = [
 ]
 
 setup(name='racing game',
-      version='0.3',
+      version='0.4',
       description='racing game',
       options=dict(build_exe=buildOptions),
       executables=executables, requires=['pygame'])

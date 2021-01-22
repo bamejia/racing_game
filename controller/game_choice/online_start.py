@@ -109,8 +109,11 @@ def online_start(window, create_server=False):
 
 def view_thread(view, model, window, lock, view_thread_run_ref):
     """ The function called in a separate threat that updates the game's visuals """
-    while view_thread_run_ref[0]:
-        lock.acquire()
-        view.update(model.vehicles)
-        lock.release()
-        window.clock.tick(129)
+    try:
+        while view_thread_run_ref[0]:
+            lock.acquire()
+            view.update(model.vehicles)
+            lock.release()
+            window.clock.tick(120)
+    except Exception as err:
+        print("VIEW THREAD:", err)

@@ -1,5 +1,6 @@
 from model.vehicle_handling.vehicle import Player, Enemy, Vehicle
 from model.vehicle_handling.spawn_enemies import spawn_chance
+from global_variables import CarType
 import json
 
 
@@ -35,7 +36,7 @@ class GameModel:
         self.num_players = num_players
         if vehicles is None:
             if num_players == 2:
-                self.vehicles = [Player(0), Player(1, "player2", x=600)]
+                self.vehicles = [Player(0), Player(1, CarType.PLAYER_2, x=600)]
                 self.player2 = self.vehicles[1]
                 self.ready = ready
             else:

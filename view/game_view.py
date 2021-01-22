@@ -22,10 +22,12 @@ class GameView:
 
         """ Greatly simplifies how much code is written and allows for simply changing the variable names in the 
             global_variables.py to change names, colors, and sizes """
-        self.vehicle_types = {gv.CAR_TYPES[i]: process_image(   # maps car types to images loaded into
-                                                                # memory on pygame.Surface objects
-            gv.CAR_IMAGE_PATHS[gv.CAR_TYPES[item]], gv.CAR_SIZES[gv.CAR_TYPES[item]][0],
-            gv.CAR_SIZES[gv.CAR_TYPES[item]][1]) for i, item in enumerate(gv.CAR_TYPES)}
+        self.vehicle_types = {
+                car_type_1: process_image(      # maps car types to images loaded into memory on pygame.Surface objects
+                    gv.CAR_IMAGE_PATHS[car_type_2], gv.CAR_SIZES[car_type_2][0],
+                    gv.CAR_SIZES[car_type_2][1])
+                for car_type_2 in gv.CarType
+                for car_type_1 in gv.CarType}
 
     """ METHODS """
     def update(self, vehicles):
@@ -41,7 +43,7 @@ class GameView:
         display_race(self, vehicles)
 
         if self.visible_top_health_bar:     # Whether to show health bars or not
-            if len(vehicles) > 1 and vehicles[1].car_type == "player2":
+            if len(vehicles) > 1 and vehicles[1].car_type == gv.CarType.PLAYER_2:
                 display_health(self.surface, vehicles[1])
             display_health(self.surface, vehicles[0])
 

@@ -144,7 +144,7 @@ class Vehicle:
 
 
 class Player(Vehicle):
-    def __init__(self, index, car_type ="player", x=400, y=400, w=None, l=None,
+    def __init__(self, index, car_type =gv.CarType.PLAYER_1, x=400, y=400, w=None, l=None,
                  acceleration=gv.PLAYER_ACCELERATION, max_speed=gv.PLAYER_MAX_SPEED, handling=gv.PLAYER_HANDLING,
                  max_handling=gv.PLAYER_MAX_HANDLING, _health=gv.PLAYER_STARTING_HEALTH,
                  input_x_vel=0, input_y_vel=0, input_direction=Dir.NONE,
@@ -176,7 +176,7 @@ class Player(Vehicle):
 
 
 class Enemy(Vehicle):
-    def __init__(self, index, car_type="random", x=None, y=None, w=None, l=None,
+    def __init__(self, index, car_type=gv.CarType.RANDOM, x=None, y=None, w=None, l=None,
                  acceleration=gv.ENEMY_ACCELERATION, max_speed=gv.ENEMY_MAX_SPEED, handling=gv.ENEMY_HANDLING,
                  max_handling=gv.ENEMY_MAX_HANDLING, _health=gv.ENEMY_STARTING_HEALTH, input_x_vel=0, input_y_vel=0,
                  input_direction=Dir.NONE,

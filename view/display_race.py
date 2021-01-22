@@ -28,7 +28,7 @@ def display_race(view, vehicles):
 
     """ draws all the cars on screen """
     for i, item in enumerate(vehicles):
-        view.surface.blit(view.vehicle_types[vehicles[i].car_type], (vehicles[i].x, vehicles[i].y))
+        view.surface.blit(view.vehicle_types[vehicles[i].car_type], (round(vehicles[i].x), round(vehicles[i].y)))
 
 
 def draw_white_lines(surface):

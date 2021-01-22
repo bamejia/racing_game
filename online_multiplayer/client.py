@@ -1,7 +1,7 @@
 import socket
 import json
 from model.direction import Dir
-from global_variables import CAR_TYPES
+from global_variables import CarType
 import model.vehicle_handling.vehicle as v
 
 
@@ -21,7 +21,7 @@ class Client:
         """
 
         self.client.connect(self.server_addr)
-        player_number = json.loads(self.client.recv(1024 * 1))
+        player_number = json.loads(self.client.recv(128))
         return player_number
 
     """ METHODS """
@@ -44,12 +44,12 @@ class Client:
 
         if isinstance(player_inputs, Dir):  # Checks to see if an enum Dir, is being sent
             player_input = player_inputs.name
-            self.client.sendall(json.dumps(player_input).encode())
+            self.client.sendall(json.dumps(player_input, separators=(",", ":")).encode())
         else:   # If a player has quit the game
             player_input = "false"
             self.client.sendall(player_input.encode())
         try:
-            input_string = self.client.recv(380).decode()   # Data from the server received as a string
+            input_string = self.client.recv(370).decode()   # Data from the server received as a string
             # if input_string == "ready":
             #     print("READY:", input_string)
             #     return True
@@ -65,8 +65,12 @@ class Client:
             i = 0
             while i < len(input_vehicles):  # Loops through the list and creates new Vehicle objects based off the
                                             # parameters from the server
-                car_type = CAR_TYPES[input_vehicles[i]]
-                if 'player' in car_type:    # Checks to see whether it should create a Player object or Enemy object
+                car_type = None
+                for i, cur_type in enumerate(CarType):  # Gets CarType enum by index of enum
+                    if i == input_vehicles[i]:
+                        car_type = cur_type
+                        break
+                if CarType.ANY_PLAYER.value in car_type.value:    # Checks to see whether it should create a Player object or Enemy object
                     new_vehicles.append(v.Player(i / 4, car_type, input_vehicles[i+1], input_vehicles[i+2],
                                                  _health=input_vehicles[i+3]))
                 else:

@@ -17,7 +17,7 @@ class TitleScreenView:
         self.surface = window.surface
         # self.gui_manager = window.gui_manager
 
-        """ Making buttons """
+        """ Making labels """
         title_y_placement = round(gv.WINDOW_L * 6 / 30)
         self.title_lb = Label(gv.TITLE_FONT, gv.TITLE_TEXT, gv.TITLE_TEXT_SIZE, True, 0, title_y_placement,
                                 gv.RED)  # Labeled as buttons, but are purely for placing on screen
@@ -26,34 +26,36 @@ class TitleScreenView:
         self.author_lb = Label(gv.BUTTON_FONT, gv.AUTHOR_TEXT, gv.BUTTON_TEXT_SIZE, True, 0, author_y_placement,
                                  gv.DARK_RED)
 
+        """ Making buttons """
         p1_btn_y_placement = round(gv.WINDOW_L * 15 / 30)
-        self.p1_btn = Button(gv.BUTTON_FONT, gv.BUTTON_TEXTS[0], gv.BUTTON_TEXT_SIZE, True, 0, p1_btn_y_placement)
+        self.p1_btn = Button(gv.BUTTON_FONT, gv.ButtonText.SINGLE_PLAYER.value,
+                             gv.BUTTON_TEXT_SIZE, True, 0, p1_btn_y_placement)
 
         p2_btn_y_placement = round(gv.WINDOW_L * 18 / 30)
-        self.p2_btn = Button(gv.BUTTON_FONT, gv.BUTTON_TEXTS[1], gv.BUTTON_TEXT_SIZE, True, 0, p2_btn_y_placement)
+        self.p2_btn = Button(gv.BUTTON_FONT, gv.ButtonText.LOCAL_2_Player.value,
+                             gv.BUTTON_TEXT_SIZE, True, 0, p2_btn_y_placement)
 
-        options_btn_y_placement = round(gv.WINDOW_L * 21 / 30)
-        self.options_btn = Button(gv.BUTTON_FONT, gv.BUTTON_TEXTS[2], gv.BUTTON_TEXT_SIZE, True, 0, options_btn_y_placement)
+        online_multiplayer_btn_y_placement = round(gv.WINDOW_L * 21 / 30)
+        self.options_btn = Button(gv.BUTTON_FONT, gv.ButtonText.ONLINE_MULTIPLAYER.value,
+                                  gv.BUTTON_TEXT_SIZE, True, 0, online_multiplayer_btn_y_placement)
 
         exit_btn_y_placement = round(gv.WINDOW_L * 24 / 30)
-        self.exit_btn = Button(gv.BUTTON_FONT, gv.BUTTON_TEXTS[3], gv.BUTTON_TEXT_SIZE, True, 0, exit_btn_y_placement)
+        self.exit_btn = Button(gv.BUTTON_FONT, gv.ButtonText.EXIT.value,
+                               gv.BUTTON_TEXT_SIZE, True, 0, exit_btn_y_placement)
 
         self.all_buttons = {
-            gv.BUTTON_TEXTS[0]: self.p1_btn,
-            gv.BUTTON_TEXTS[1]: self.p2_btn,
-            gv.BUTTON_TEXTS[2]: self.options_btn,
-            gv.BUTTON_TEXTS[3]: self.exit_btn,
+            gv.ButtonText.SINGLE_PLAYER.value: self.p1_btn,
+            gv.ButtonText.LOCAL_2_Player.value: self.p2_btn,
+            gv.ButtonText.ONLINE_MULTIPLAYER.value: self.options_btn,
+            gv.ButtonText.EXIT.value: self.exit_btn,
         }
 
         self.cur_btn_colors = {     # Color state of each button
-            gv.BUTTON_TEXTS[0]: gv.ORANGE,
-            gv.BUTTON_TEXTS[1]: gv.ORANGE,
-            gv.BUTTON_TEXTS[2]: gv.ORANGE,
-            gv.BUTTON_TEXTS[3]: gv.ORANGE
+            gv.ButtonText.SINGLE_PLAYER.value: gv.ORANGE,
+            gv.ButtonText.LOCAL_2_Player.value: gv.ORANGE,
+            gv.ButtonText.ONLINE_MULTIPLAYER.value: gv.ORANGE,
+            gv.ButtonText.EXIT.value: gv.ORANGE
         }
-
-        # y_placement = round(gv.WINDOW_L * 28 / 30)
-        # self.new_btn = Button(gv.BUTTON_FONT, gv.BUTTON_TEXTS[0], gv.BUTTON_TEXT_SIZE, True, 0, y_placement)
 
     """ METHODS """
     def show_screen(self, btn_hover, btn_press):
